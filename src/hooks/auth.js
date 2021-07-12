@@ -44,28 +44,22 @@ function AuthProvider({ children }) {
   async function signInFacebook() {
     try {
       setLoading(true);
-
       await Facebook.initializeAsync({
-        appId: 496078595025593,
+        appId: '496078595025593'
       });
       const {
         type,
         token,
-        expirationDate,
-        permissions,
-        declinedPermissions,
-        userId,
       } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile'],
+        permissions: ['public_profile', 'email'],
       });
 
-      console.log(userId);
-      console.log(token);
-      console.log(type);
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        console.log(response);
+        const response = 
+        await fetch(`https://graph.facebook.com/me?fields=id,name,picture.type(large),email&access_token=${token}`);
+        const data = await response.json();
+        setUser(data);
       }
     } catch ({message}){
       console.log(message);
