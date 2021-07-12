@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { styles } from './styles';
+import styles from './styles';
 
 export function CustomButton({ title, ...rest }){
   return(

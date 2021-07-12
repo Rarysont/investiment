@@ -6,7 +6,9 @@ import React,
 } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import * as Google from 'expo-google-app-auth';
+import * as Facebook from 'expo-facebook';
 
 import { COLLECTION_USERS } from '../../configs/database';
 
@@ -17,7 +19,7 @@ function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
 
-  async function signIn() {
+  async function signInGoogle() {
     try {
       setLoading(true);
 
@@ -39,10 +41,44 @@ function AuthProvider({ children }) {
     }
   }
 
+  async function signInFacebook() {
+    try {
+      setLoading(true);
+
+      await Facebook.initializeAsync({
+        appId: 496078595025593,
+      });
+      const {
+        type,
+        token,
+        expirationDate,
+        permissions,
+        declinedPermissions,
+        userId,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile'],
+      });
+
+      console.log(userId);
+      console.log(token);
+      console.log(type);
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        console.log(response);
+      }
+    } catch ({message}){
+      console.log(message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <AuthContext.Provider value={{
       userInfo,
-      signIn,
+      signInGoogle,
+      signInFacebook,
       loading,
       token,
     }}>
