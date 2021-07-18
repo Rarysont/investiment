@@ -21,7 +21,7 @@ import { ButtonIconGoogle } from '../../components/ButtonGoogle';
 import { ButtonIconFacebook } from '../../components/ButtonFacebook';
 
 
-export function SignIn() {
+export function SignUp() {
   const { control, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
 
@@ -37,8 +37,8 @@ export function SignIn() {
     }
   }
 
-  function handleSignUp() {
-    navigation.navigate('SignUp');
+  function handleSignIn() {
+    navigation.navigate('SignIn');
   } 
 
   async function handleSignInFacebook() {
@@ -68,7 +68,7 @@ export function SignIn() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Username"
+              placeholder="Usuário"
               placeholderTextColor="#000"
             />
           )}
@@ -87,7 +87,26 @@ export function SignIn() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Password"
+              placeholder="Digite a senha"
+              placeholderTextColor="#000" 
+              secureTextEntry={true} 
+            />
+          )}
+          name="password"
+        />
+
+        <Controller
+          control={control}
+          rules={{
+          maxLength: 100,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="Digite novamente a senha"
               placeholderTextColor="#000" 
               secureTextEntry={true} 
             />
@@ -99,20 +118,20 @@ export function SignIn() {
         <View style={styles.signUp}>
             <RectButton 
               style={styles.btnSignUp}
-              onPress={handleSignUp}
+              onPress={handleSignIn}
             >
               <Text style={styles.btnSignUpTitle}>
-                Ainda não tem conta? Cadastre-se
+                Já tem uma conta? Faça login
               </Text>
             </RectButton>
-          <Text style={styles.textEntry}>Ou</Text>
+          <Text style={styles.textEntry}>Ou cadastre-se com</Text>
         </View>
 
         <View style={styles.auth}>
-          <ButtonIconGoogle  title="Entrar com Google" onPress={handleSignIn} />
+          <ButtonIconGoogle  title="Cadastrar com Google" onPress={handleSignIn} />
         </View>
 
-        <ButtonIconFacebook title="Entrar com Facebook" onPress={handleSignInFacebook} />
+        <ButtonIconFacebook title="Cadastrar com Facebook" onPress={handleSignInFacebook} />
       </View>
     </Background>
   );

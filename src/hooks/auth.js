@@ -14,6 +14,11 @@ import { COLLECTION_USERS } from '../../configs/database';
 
 export const AuthContext = createContext({});
 
+const { APP_ID } = process.env;
+const { GOOGLE_ANDROID_CLIENT_ID } = process.env;
+const { GOOGLE_IOS_CLIENT_ID } = process.env;
+
+
 function AuthProvider({ children }) {
   const [userInfo, setUser] = useState({});
   const [loading, setLoading] = useState(false);
@@ -24,8 +29,8 @@ function AuthProvider({ children }) {
       setLoading(true);
 
       const { type, accessToken, user } = await Google.logInAsync({
-        androidClientId: '150568413679-lu41k6lt5olatro2j062boosuocrhv4g.apps.googleusercontent.com',
-        iosClientId: '150568413679-dain7elk9usf2id377v94gh6diotjo3j.apps.googleusercontent.com',
+        androidClientId: GOOGLE_ANDROID_CLIENT_ID,
+        iosClientId: GOOGLE_IOS_CLIENT_ID,
         scopes: ['profile', 'email'],
       });
 
@@ -45,7 +50,7 @@ function AuthProvider({ children }) {
     try {
       setLoading(true);
       await Facebook.initializeAsync({
-        appId: '496078595025593'
+        appId: APP_ID,
       });
       const {
         type,
