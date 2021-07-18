@@ -52,11 +52,7 @@ export function SignUp() {
   return (
     <Background>
       <View style={styles.container}>
-        <Image 
-          source={Login}
-          style={styles.image}
-        />
-
+        <Text style={styles.textHeader}>Cadastre-se</Text>
         <Controller
           control={control}
           rules={{

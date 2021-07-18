@@ -20,7 +20,7 @@ const { GOOGLE_IOS_CLIENT_ID } = process.env;
 
 
 function AuthProvider({ children }) {
-  const [userInfo, setUser] = useState({});
+  const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
 
@@ -37,7 +37,14 @@ function AuthProvider({ children }) {
       if (type === "success") {
         setToken(accessToken);
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(user));
-        setUser(user);
+        console.log(user);
+        setUserInfo({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          picture: user.photoUrl,
+          token: accessToken,
+        });
       }
     } catch {
       throw new Error('Não foi possível autenticar');
@@ -64,7 +71,14 @@ function AuthProvider({ children }) {
         const response = 
         await fetch(`https://graph.facebook.com/me?fields=id,name,picture.type(large),email&access_token=${token}`);
         const data = await response.json();
-        setUser(data);
+
+        setUserInfo({
+          id: data.id,
+          email: data.email,
+          name: data.name,
+          picture: data.picture.data.url,
+          token,
+        });
       }
     } catch ({message}){
       console.log(message);
