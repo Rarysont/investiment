@@ -12,7 +12,7 @@ export function ButtonIconFacebook({ title, ...rest }){
       {...rest }
     >
       <View style={styles.iconWrapper}>
-        <FacebookIcon name="facebook" size={32} color="black" />
+        <FacebookIcon name="facebook" size={32} color="#0A1033" />
       </View>
 
       <Text style={styles.title}>
