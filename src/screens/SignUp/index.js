@@ -29,7 +29,7 @@ export function SignUp() {
 
   const navigation = useNavigation();
 
-  async function handleSignIn() {
+  async function handleSignInGoogle() {
     try {
       await signInGoogle();
     }catch (error) {
@@ -52,7 +52,7 @@ export function SignUp() {
   return (
     <Background>
       <View style={styles.container}>
-        <Text style={styles.textHeader}>Cadastre-se</Text>
+        <Text style={styles.textHeader}>Crie a sua conta</Text>
         <Controller
           control={control}
           rules={{
@@ -124,7 +124,7 @@ export function SignUp() {
         </View>
 
         <View style={styles.auth}>
-          <ButtonIconGoogle  title="Cadastrar com Google" onPress={handleSignIn} />
+          <ButtonIconGoogle  title="Cadastrar com Google" onPress={handleSignInGoogle} />
         </View>
 
         <ButtonIconFacebook title="Cadastrar com Facebook" onPress={handleSignInFacebook} />

@@ -1,9 +1,15 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import { Background } from '../../components/background';
+
 import styles from './styles';
 
 export function MyList(){
   return(
-      <Text>Tela My List</Text>
+    <Background>
+      <View style={styles.container}>
+        <Text style={styles.text}>Tela carteira</Text>
+      </View>
+    </Background>
   );
 }

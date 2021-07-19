@@ -1,9 +1,15 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import { Background } from '../../components/background';
+
 import styles from './styles';
 
 export function Profile(){
   return(
-      <Text>Tela de Perfil</Text>
+    <Background>
+      <View style={styles.container}>
+        <Text style={styles.text}>Tela carteira</Text>
+      </View>
+    </Background>
   );
 }
