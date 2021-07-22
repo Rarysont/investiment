@@ -69,9 +69,8 @@ function AuthProvider({ children }) {
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
         const response = 
-        await fetch(`https://graph.facebook.com/me?fields=id,name,picture.type(large),email&access_token=${token}`);
+        await fetch(`https://graph.facebook.com/me?fields=id,name,picture.width(480).height(480),email&access_token=${token}`);
         const data = await response.json();
-
         setUserInfo({
           id: data.id,
           email: data.email,

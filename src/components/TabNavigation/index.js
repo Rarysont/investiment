@@ -57,7 +57,14 @@ function MyTabBar({ state, descriptors, navigation }) {
             accessibilityState={isFocused ? { selected: true } : {}}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={styles.tabNavigationButton}
+            style={{ 
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginbottom: 3,
+              borderTopWidth: isFocused ? 1 : 0,
+              borderTopColor: isFocused && '#FFF',
+            }}
           >
             <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
             <Text style={{ 

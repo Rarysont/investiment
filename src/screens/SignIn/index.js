@@ -4,6 +4,7 @@ import {
   Image, 
   TextInput,
   Text,
+  ScrollView,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -50,75 +51,77 @@ export function SignIn() {
 
   return (
     <Background>
-      <View style={styles.container}>
-        <Image 
-          source={Login}
-          style={styles.image}
-        />
+      <ScrollView>
+        <View style={styles.container}>
+          <Image 
+            source={Login}
+            style={styles.image}
+          />
 
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Username"
-              placeholderTextColor="#000"
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Username"
+                placeholderTextColor="#000"
+              />
+            )}
+            name="username"
+          />
+          {errors.username && <Text>This is required.</Text>}
+
+          <Controller
+            control={control}
+            rules={{
+            maxLength: 100,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Password"
+                placeholderTextColor="#000" 
+                secureTextEntry={true} 
+              />
+            )}
+            name="password"
+          />
+
+          <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
+          <View style={styles.signUp}>
+              <RectButton 
+                style={styles.btnSignUp}
+                onPress={handleSignUp}
+              >
+                <Text style={styles.btnSignUpTitle}>
+                  Ainda não tem conta? Cadastre-se
+                </Text>
+              </RectButton>
+            <Text style={styles.textEntry}>Ou</Text>
+          </View>
+
+          <View style={styles.auth}>
+            <ButtonIconGoogle 
+              title="Entrar com Google" 
+              onPress={handleSignIn} 
             />
-          )}
-          name="username"
-        />
-        {errors.username && <Text>This is required.</Text>}
+          </View>
 
-        <Controller
-          control={control}
-          rules={{
-          maxLength: 100,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Password"
-              placeholderTextColor="#000" 
-              secureTextEntry={true} 
-            />
-          )}
-          name="password"
-        />
-
-        <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
-        <View style={styles.signUp}>
-            <RectButton 
-              style={styles.btnSignUp}
-              onPress={handleSignUp}
-            >
-              <Text style={styles.btnSignUpTitle}>
-                Ainda não tem conta? Cadastre-se
-              </Text>
-            </RectButton>
-          <Text style={styles.textEntry}>Ou</Text>
-        </View>
-
-        <View style={styles.auth}>
-          <ButtonIconGoogle 
-            title="Entrar com Google" 
-            onPress={handleSignIn} 
+          <ButtonIconFacebook 
+            title="Entrar com Facebook" 
+            onPress={handleSignInFacebook} 
           />
         </View>
-
-        <ButtonIconFacebook 
-          title="Entrar com Facebook" 
-          onPress={handleSignInFacebook} 
-        />
-      </View>
+      </ScrollView>
     </Background>
   );
 }
