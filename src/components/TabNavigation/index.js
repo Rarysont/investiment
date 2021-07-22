@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity  } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -7,37 +7,101 @@ import { MyList } from '../../screens/MyList';
 import { Profile } from '../../screens/Profile';
 import { Wallet } from '../../screens/Wallet';
 
+import styles from './styles.less';
+
 const Tab = createBottomTabNavigator();
 
-const renderTabIcon = (iconName, color) => {
-  return <Icon name={iconName} size={25} color="#1CC0A0" />;
-};
+function MyTabBar({ state, descriptors, navigation }) {
+  const focusedOptions = descriptors[state.routes[state.index].key].options;
+
+  if (focusedOptions.tabBarVisible === false) {
+    return null;
+  }
+
+  return (
+    <View style={styles.tabNavigation}>
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+
+        return (
+          <TouchableOpacity
+            key={index}
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            style={styles.tabNavigationButton}
+          >
+            <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
+            <Text style={{ 
+              color: isFocused ? '#1CC0A0' : '#FFF',
+              fontFamily: 'Inter_500Medium',
+              fontSize: 12,
+              textAlign: 'center',
+              }}>
+              {route.name}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
 
 export function TabsNavigation(){
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: '#000',
-      }}
+      tabBar={props => <MyTabBar {...props} />}
     >
       <Tab.Screen 
-        name="Lista"
+        name="Minha Lista"
         component={MyList}
         options={{
-          tabBarIcon: ({ color }) => renderTabIcon("th-list", color),
+          tabBarLabel: 'th-list'
         }}
       />
 
       <Tab.Screen 
         name="Carteira"
         component={Wallet}
-        options={{ tabBarIcon: ({ color }) => renderTabIcon("wallet", color) }}
+        options={{
+          tabBarLabel: 'wallet'
+         }}
       />
 
       <Tab.Screen 
         name="Perfil"
         component={Profile}
-        options={{ tabBarIcon: ({ color }) => renderTabIcon("user", color) }}
+        options={{
+          tabBarLabel: 'user'
+        }}
       />
     </Tab.Navigator>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { TabsNavigation } from '../components/TabNavigation';
+import { Background } from '../components/background';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -11,7 +12,7 @@ export function AuthRoutes() {
       headerMode="none"
       screenOptions={{
         cardStyle: {
-          backgroundColor: '#0A1033'
+          backgroundColor: <Background />,
         }
       }}
     > 

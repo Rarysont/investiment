@@ -8,7 +8,7 @@ export function Profile(){
   return(
     <Background>
       <View style={styles.container}>
-        <Text style={styles.text}>Tela carteira</Text>
+        <Text style={styles.text}>Tela perfil</Text>
       </View>
     </Background>
   );

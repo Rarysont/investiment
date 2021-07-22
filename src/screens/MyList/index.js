@@ -8,7 +8,7 @@ export function MyList(){
   return(
     <Background>
       <View style={styles.container}>
-        <Text style={styles.text}>Tela carteira</Text>
+        <Text style={styles.text}>Tela lista</Text>
       </View>
     </Background>
   );

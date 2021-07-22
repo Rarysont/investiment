@@ -23,7 +23,7 @@ import { ButtonIconFacebook } from '../../components/ButtonFacebook';
 
 export function SignIn() {
   const navigation = useNavigation();
-  const { signInGoogle, signInFacebook, loading } = useAuth();
+  const { signInGoogle, signInFacebook } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = data => console.log(data);
