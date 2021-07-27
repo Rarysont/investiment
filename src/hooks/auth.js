@@ -3,6 +3,7 @@ import React,
   createContext,
   useContext,
   useState,
+  useEffect,
 } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,21 +37,26 @@ function AuthProvider({ children }) {
 
       if (type === "success") {
         setToken(accessToken);
-        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(user));
-        console.log(user);
-        setUserInfo({
+        const userData = {
           id: user.id,
           email: user.email,
           name: user.name,
           picture: user.photoUrl,
           token: accessToken,
-        });
+        };
+        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
+        setUserInfo(userData);
       }
     } catch {
       throw new Error('Não foi possível autenticar');
     } finally {
       setLoading(false);
     }
+  }
+
+  async function singOut() {
+    setUserInfo({});
+    await AsyncStorage.removeItem(COLLECTION_USERS);
   }
 
   async function signInFacebook() {
@@ -67,10 +73,19 @@ function AuthProvider({ children }) {
       });
 
       if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
         const response = 
         await fetch(`https://graph.facebook.com/me?fields=id,name,picture.width(480).height(480),email&access_token=${token}`);
         const data = await response.json();
+        const userData = {
+          id: data.id,
+          email: data.email,
+          name: data.name,
+          picture: data.picture.data.url,
+          token,
+        };
+
+        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
+
         setUserInfo({
           id: data.id,
           email: data.email,
@@ -86,6 +101,18 @@ function AuthProvider({ children }) {
     }
   }
 
+  async function loadUserStorageData() {
+    const storage = await AsyncStorage.getItem(COLLECTION_USERS);
+    if (storage) {
+      const userLogged = JSON.parse(storage);
+      setUserInfo(userLogged);
+    }
+  }
+
+  useEffect(() => {
+    loadUserStorageData();
+  }, []);
+
   return (
     <AuthContext.Provider value={{
       userInfo,
@@ -93,6 +120,7 @@ function AuthProvider({ children }) {
       signInFacebook,
       loading,
       token,
+      singOut,
     }}>
       {children}
     </AuthContext.Provider>

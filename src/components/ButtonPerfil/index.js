@@ -14,7 +14,7 @@ export function ButtonPerfil({ text, title, ...rest }){
       >
         <View style={styles.box}>
           <Text style={styles.title}>
-            {title ? title : 'Não definido'}
+            {title ? title : 'Não cadastrado'}
           </Text>
            <Icon name="chevron-right" size={32} color="#FFF" />
         </View>

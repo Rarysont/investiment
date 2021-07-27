@@ -8,7 +8,7 @@ import Icon from '@expo/vector-icons/MaterialIcons';
 import styles from './styles';
 
 export function Profile(){
-  const { userInfo } = useAuth();
+  const { userInfo, singOut } = useAuth();
 
   return(
     <Background>
@@ -40,9 +40,9 @@ export function Profile(){
           </View>
 
           <View style={styles.logoutContainer}>
-            <RectButton style={styles.logoutButton}>
+            <RectButton style={styles.logoutButton} onPress={singOut}>
               <View style={styles.box}>
-              <Icon name="logout" size={32} color="#1CC0A0" />
+              <Icon name="logout" size={32} color="#FFF" />
                 <Text style={styles.title}>
                   SAIR
                 </Text>
