@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { TabsNavigation } from '../components/TabNavigation';
 import { Background } from '../components/background';
+import { SignUp } from '../screens/SignUp';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -10,11 +11,6 @@ export function AuthRoutes() {
   return(
     <Navigator
       headerMode="none"
-      screenOptions={{
-        cardStyle: {
-          backgroundColor: <Background />,
-        }
-      }}
     > 
       <Screen 
         name="TabsNavigation"
@@ -24,7 +20,6 @@ export function AuthRoutes() {
           headerBackTitle: 'Profile',
         }}
       />
-
     </Navigator>
   )
 }

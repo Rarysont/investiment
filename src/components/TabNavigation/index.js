@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, TouchableOpacity  } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Background } from '../background';
 
 import { MyList } from '../../screens/MyList';
 import { Profile } from '../../screens/Profile';
@@ -51,31 +52,32 @@ function MyTabBar({ state, descriptors, navigation }) {
         };
 
         return (
-          <TouchableOpacity
-            key={index}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ 
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginbottom: 3,
-              borderTopWidth: isFocused ? 1 : 0,
-              borderTopColor: isFocused && '#FFF',
-            }}
-          >
-            <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
-            <Text style={{ 
-              color: isFocused ? '#1CC0A0' : '#FFF',
-              fontFamily: 'Inter_500Medium',
-              fontSize: 12,
-              textAlign: 'center',
-              }}>
-              {route.name}
-            </Text>
-          </TouchableOpacity>
+          <Background key={index}>
+            <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityState={isFocused ? { selected: true } : {}}
+              onPress={onPress}
+              onLongPress={onLongPress}
+              style={{ 
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginbottom: 3,
+                borderTopWidth: isFocused ? 1 : 0,
+                borderTopColor: isFocused && '#FFF',
+              }}
+            >
+              <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
+              <Text style={{ 
+                color: isFocused ? '#1CC0A0' : '#FFF',
+                fontFamily: 'Inter_500Medium',
+                fontSize: 12,
+                textAlign: 'center',
+                }}>
+                {route.name}
+              </Text>
+            </TouchableOpacity>
+          </Background>
         );
       })}
     </View>

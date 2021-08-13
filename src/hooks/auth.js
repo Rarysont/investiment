@@ -19,7 +19,6 @@ const { APP_ID } = process.env;
 const { GOOGLE_ANDROID_CLIENT_ID } = process.env;
 const { GOOGLE_IOS_CLIENT_ID } = process.env;
 
-
 function AuthProvider({ children }) {
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(false);
@@ -47,8 +46,8 @@ function AuthProvider({ children }) {
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
         setUserInfo(userData);
       }
-    } catch {
-      throw new Error('Não foi possível autenticar');
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -94,8 +93,8 @@ function AuthProvider({ children }) {
           token,
         });
       }
-    } catch ({message}){
-      console.log(message);
+    } catch (error){
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -111,6 +110,7 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     loadUserStorageData();
+    // singOut();
   }, []);
 
   return (
