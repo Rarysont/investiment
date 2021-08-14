@@ -1,13 +1,17 @@
+@import "../../global/styles/variables.less";
+
 .container {
   flex: 1;
   align-items: center;
   justify-content: center;
 }
 
-.image {
-  width: 250;
-  height: 250;
-  margin-bottom: 20;
+.textHeader {
+  color: @primary-white;
+  text-align: center;
+  font-family: Inter_700Bold;
+  font-size: 20;
+  margin-bottom: 20px;
 }
 
 .input {
@@ -16,8 +20,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  background-color: #FFF;
-  color: #FFF;
+  background-color:@primary-white;
+  color: @primary-white;
   margin-bottom: 10px;
   padding: 10px;
 }
@@ -31,11 +35,11 @@
 }
 
 .textEntry {
-  color: #FFF;
+  color: @primary-white;
   text-align: center;
   font-family: Inter_500Medium;
   font-size: 15;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .btnSignUp {
@@ -50,5 +54,5 @@
   text-align: center;
   font-size: 15px;
   font-family: Inter_500Medium;
-  color: #1CC0A0;
+  color: @primary-green;
 }

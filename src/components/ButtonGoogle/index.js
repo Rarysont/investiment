@@ -12,7 +12,7 @@ export function ButtonIconGoogle({ title, ...rest }){
       {...rest }
     >
       <View style={styles.iconWrapper}>
-        <GoogleIcon name="google" size={32} color="black" />
+        <GoogleIcon name="google" size={32} color="#0A1033" />
       </View>
 
       <Text style={styles.title}>

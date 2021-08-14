@@ -3,6 +3,7 @@ import React,
   createContext,
   useContext,
   useState,
+  useEffect,
 } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,9 +19,8 @@ const { APP_ID } = process.env;
 const { GOOGLE_ANDROID_CLIENT_ID } = process.env;
 const { GOOGLE_IOS_CLIENT_ID } = process.env;
 
-
 function AuthProvider({ children }) {
-  const [userInfo, setUser] = useState({});
+  const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
 
@@ -36,14 +36,26 @@ function AuthProvider({ children }) {
 
       if (type === "success") {
         setToken(accessToken);
-        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(user));
-        setUser(user);
+        const userData = {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          picture: user.photoUrl,
+          token: accessToken,
+        };
+        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
+        setUserInfo(userData);
       }
-    } catch {
-      throw new Error('Não foi possível autenticar');
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }
+  }
+
+  async function singOut() {
+    setUserInfo({});
+    await AsyncStorage.removeItem(COLLECTION_USERS);
   }
 
   async function signInFacebook() {
@@ -60,18 +72,46 @@ function AuthProvider({ children }) {
       });
 
       if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
         const response = 
-        await fetch(`https://graph.facebook.com/me?fields=id,name,picture.type(large),email&access_token=${token}`);
+        await fetch(`https://graph.facebook.com/me?fields=id,name,picture.width(480).height(480),email&access_token=${token}`);
         const data = await response.json();
-        setUser(data);
+        const userData = {
+          id: data.id,
+          email: data.email,
+          name: data.name,
+          picture: data.picture.data.url,
+          token,
+        };
+
+        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
+
+        setUserInfo({
+          id: data.id,
+          email: data.email,
+          name: data.name,
+          picture: data.picture.data.url,
+          token,
+        });
       }
-    } catch ({message}){
-      console.log(message);
+    } catch (error){
+      console.log(error);
     } finally {
       setLoading(false);
     }
   }
+
+  async function loadUserStorageData() {
+    const storage = await AsyncStorage.getItem(COLLECTION_USERS);
+    if (storage) {
+      const userLogged = JSON.parse(storage);
+      setUserInfo(userLogged);
+    }
+  }
+
+  useEffect(() => {
+    loadUserStorageData();
+    // singOut();
+  }, []);
 
   return (
     <AuthContext.Provider value={{
@@ -80,6 +120,7 @@ function AuthProvider({ children }) {
       signInFacebook,
       loading,
       token,
+      singOut,
     }}>
       {children}
     </AuthContext.Provider>
