@@ -2,7 +2,6 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Background } from '../../components/background';
 import { acoes } from '../../utils/acoes';
-import { ListDivider } from '../../components/ListDivider';
 import { TicketList } from '../../components/TicketList';
 import styles from './styles';
 

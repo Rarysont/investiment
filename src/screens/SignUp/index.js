@@ -17,8 +17,7 @@ import { useAuth } from '../../hooks/auth';
 
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';
-import { ButtonIconGoogle } from '../../components/ButtonGoogle';
-import { ButtonIconFacebook } from '../../components/ButtonFacebook';
+import { ButtonSocial } from '../../components/ButtonSocial';
 
 
 export function SignUp() {
@@ -124,10 +123,17 @@ export function SignUp() {
         </View>
 
         <View style={styles.auth}>
-          <ButtonIconGoogle  title="Cadastrar com Google" onPress={handleSignInGoogle} />
+          <ButtonSocial 
+            title="Cadastrar com Google" 
+            onPress={handleSignInGoogle} 
+          />
         </View>
 
-        <ButtonIconFacebook title="Cadastrar com Facebook" onPress={handleSignInFacebook} />
+        <ButtonSocial 
+          title="Cadastrar com Facebook" 
+          onPress={handleSignInFacebook}
+          isFacebook={true}
+        />
       </View>
     </Background>
   );
