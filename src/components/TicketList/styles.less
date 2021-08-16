@@ -1,3 +1,5 @@
+@import "../../global/styles/variables.less";
+
 .container {
   flex: 1;
   align-content: center;
@@ -5,17 +7,57 @@
 }
 
 .box {
+  display: flex;
   flex-direction: row;
-  border: 1px;
-  border-color: green;
+  width: 100%;
 }
 
 .namesTickets {
   flex-direction: column;
+  width: 50%;
 }
 
-.containerActions {
+.namesTickets2 {
+  width: 50%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+
+.abr {
+  font-size: 18px;
+  font-family: Inter_500Medium;
+  color: @highlight;
   text-align: left;
   margin: 5px;
-  color: white;
+}
+
+.value {
+  font-size: 18px;
+  font-family: Inter_500Medium;
+  color: @highlight;
+  text-align: right;
+  margin: 5px;
+}
+
+.nameAction {
+  font-size: 16px;
+  font-family: Inter_500Medium;
+  color: @heading;
+  text-align: left;
+  margin: 5px;
+}
+
+.boxLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.logo {
+  background-color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
 }
