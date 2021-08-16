@@ -18,9 +18,7 @@ import { useAuth } from '../../hooks/auth';
 
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';
-import { ButtonIconGoogle } from '../../components/ButtonGoogle';
-import { ButtonIconFacebook } from '../../components/ButtonFacebook';
-
+import { ButtonSocial } from '../../components/ButtonSocial';
 
 export function SignIn() {
   const navigation = useNavigation();
@@ -110,15 +108,16 @@ export function SignIn() {
           </View>
 
           <View style={styles.auth}>
-            <ButtonIconGoogle 
+            <ButtonSocial 
               title="Entrar com Google" 
               onPress={handleSignIn} 
             />
           </View>
 
-          <ButtonIconFacebook 
+          <ButtonSocial 
             title="Entrar com Facebook" 
-            onPress={handleSignInFacebook} 
+            onPress={handleSignInFacebook}
+            isFacebook={true}
           />
         </View>
       </ScrollView>
