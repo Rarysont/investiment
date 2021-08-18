@@ -9,7 +9,7 @@ export function MyList(){
   return(
     <Background>
       <View style={styles.container}>
-      <FlatList 
+      <FlatList
           data={acoes}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
