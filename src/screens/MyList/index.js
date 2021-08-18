@@ -9,15 +9,13 @@ export function MyList(){
   return(
     <Background>
       <View style={styles.container}>
-      <FlatList 
+        <FlatList
           data={acoes}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <TicketList data={item} />
           )}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 68, paddingTop: 103 }}
-          style={styles.guilds}
+          style={styles.myList}
         />
       </View>
     </Background>

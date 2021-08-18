@@ -56,9 +56,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginbottom: 3,
-                borderTopWidth: isFocused ? 1 : 0,
-                borderTopColor: isFocused && '#FFF',
+                marginbottom: 3
               }}
             >
               <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
