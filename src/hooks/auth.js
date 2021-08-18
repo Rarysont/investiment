@@ -72,7 +72,7 @@ function AuthProvider({ children }) {
       });
 
       if (type === 'success') {
-        const response = 
+        const response =
         await fetch(`https://graph.facebook.com/me?fields=id,name,picture.width(480).height(480),email&access_token=${token}`);
         const data = await response.json();
         const userData = {
@@ -110,7 +110,6 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     loadUserStorageData();
-    // singOut();
   }, []);
 
   return (
@@ -124,7 +123,7 @@ function AuthProvider({ children }) {
     }}>
       {children}
     </AuthContext.Provider>
-  ) 
+  )
 }
 
 function useAuth() {

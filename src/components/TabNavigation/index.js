@@ -52,7 +52,7 @@ function MyTabBar({ state, descriptors, navigation }) {
               accessibilityState={isFocused ? { selected: true } : {}}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={{ 
+              style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -62,7 +62,7 @@ function MyTabBar({ state, descriptors, navigation }) {
               }}
             >
               <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
-              <Text style={{ 
+              <Text style={{
                 color: isFocused ? '#1CC0A0' : '#FFF',
                 fontFamily: 'Inter_500Medium',
                 fontSize: 12,
@@ -83,7 +83,7 @@ export function TabsNavigation(){
     <Tab.Navigator
       tabBar={props => <MyTabBar {...props} />}
     >
-      <Tab.Screen 
+      <Tab.Screen
         name="Minha Lista"
         component={MyList}
         options={{
@@ -91,7 +91,7 @@ export function TabsNavigation(){
         }}
       />
 
-      <Tab.Screen 
+      <Tab.Screen
         name="Carteira"
         component={Wallet}
         options={{
@@ -99,7 +99,7 @@ export function TabsNavigation(){
          }}
       />
 
-      <Tab.Screen 
+      <Tab.Screen
         name="Perfil"
         component={Profile}
         options={{

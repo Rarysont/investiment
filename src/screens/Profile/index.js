@@ -16,17 +16,17 @@ export function Profile(){
         <View style={styles.containerPage}>
           <Text style={styles.textPerfil}>Perfil</Text>
           <View style={{
-            borderWidth: 3, 
-            borderTopColor: '#FFF', 
-            width: '80%', 
-            justifyContent: 'center', 
+            borderWidth: 3,
+            borderTopColor: '#FFF',
+            width: '80%',
+            justifyContent: 'center',
             textAlign: 'center',
             display: 'flex'
           }} />
         </View>
 
         <View style={styles.container}>
-          <Image 
+          <Image
             source={{ uri: userInfo.picture }}
             style={styles.imageUser}
           />
