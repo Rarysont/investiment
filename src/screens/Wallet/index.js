@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View, FlatList, SafeAreaView  } from 'react-native';
+import { Text, View  } from 'react-native';
 import { Background } from '../../components/background';
 import { Dimensions } from "react-native";
-import { ModalWallet } from '../../components/ModalWallet';
-import { RectButton } from 'react-native-gesture-handler';
-import { CustomButton } from '../../components/Button';
-import { acoes } from '../../utils/acoes';
-import { TicketList } from '../../components/TicketList';
+import { ScrollTicketList } from '../../components/ScrollTicketList';
 import {
   LineChart,
   BarChart,
@@ -19,16 +15,6 @@ import {
 import styles from './styles';
 
 export function Wallet(){
-  const [openModal, setOpenModal] = useState(false);
-
-  function handleOpenGuilds(){
-    setOpenModal(true);
-  }
-
-  function handleCloseGuilds(){
-    setOpenModal(false);
-  }
-
   const screenWidth = Dimensions.get("window").width;
   const data = [
     {
@@ -95,30 +81,9 @@ export function Wallet(){
         />
       </View>
 
-      <View style={styles.containerModal}>
-        <View style={styles.bar} />
-        <RectButton 
-          style={styles.btnModal}
-          onPress={handleOpenGuilds}
-        >
-          <Text style={styles.btnModalTitle}>
-            Minha Lista
-          </Text>
-        </RectButton>
+      <View style={styles.scrollTicket}>
+        <ScrollTicketList />
       </View>
-
-      <ModalWallet visible={openModal} closeModal={handleCloseGuilds}>
-        <View style={styles.containerList}>
-          <FlatList 
-            data={acoes}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <TicketList data={item} />
-            )}
-            style={styles.myList}
-          />
-        </View>
-      </ModalWallet>
     </Background>
   );
 }
