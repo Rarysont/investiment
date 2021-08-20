@@ -64,7 +64,7 @@ export function Wallet(){
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional
   };
-  
+
   return(
     <Background>
       <View style={styles.container}>

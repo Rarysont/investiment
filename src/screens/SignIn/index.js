@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  View, 
-  Image, 
+import {
+  View,
+  Image,
   TextInput,
   Text,
   ScrollView,
@@ -37,7 +37,7 @@ export function SignIn() {
 
   function handleSignUp() {
     navigation.navigate('SignUp');
-  } 
+  }
 
   async function handleSignInFacebook() {
     try {
@@ -51,7 +51,7 @@ export function SignIn() {
     <Background>
       <ScrollView>
         <View style={styles.container}>
-          <Image 
+          <Image
             source={Login}
             style={styles.image}
           />
@@ -87,8 +87,8 @@ export function SignIn() {
                 onChangeText={onChange}
                 value={value}
                 placeholder="Password"
-                placeholderTextColor="#000" 
-                secureTextEntry={true} 
+                placeholderTextColor="#000"
+                secureTextEntry={true}
               />
             )}
             name="password"
@@ -96,7 +96,7 @@ export function SignIn() {
 
           <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
           <View style={styles.signUp}>
-              <RectButton 
+              <RectButton
                 style={styles.btnSignUp}
                 onPress={handleSignUp}
               >
@@ -108,14 +108,14 @@ export function SignIn() {
           </View>
 
           <View style={styles.auth}>
-            <ButtonSocial 
-              title="Entrar com Google" 
-              onPress={handleSignIn} 
+            <ButtonSocial
+              title="Entrar com Google"
+              onPress={handleSignIn}
             />
           </View>
 
-          <ButtonSocial 
-            title="Entrar com Facebook" 
+          <ButtonSocial
+            title="Entrar com Facebook"
             onPress={handleSignInFacebook}
             isFacebook={true}
           />

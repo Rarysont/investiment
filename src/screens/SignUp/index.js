@@ -1,9 +1,8 @@
 import React from 'react';
-import { 
-  View, 
-  Image, 
+import {
+  View,
   TextInput,
-  Text, 
+  Text,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -12,7 +11,6 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import styles from './styles.less';
 
-import Login from '../../assets/login.png';
 import { useAuth } from '../../hooks/auth';
 
 import { CustomButton } from '../../components/Button';
@@ -38,7 +36,7 @@ export function SignUp() {
 
   function handleSignIn() {
     navigation.navigate('SignIn');
-  } 
+  }
 
   async function handleSignInFacebook() {
     try {
@@ -83,8 +81,8 @@ export function SignUp() {
               onChangeText={onChange}
               value={value}
               placeholder="Digite a senha"
-              placeholderTextColor="#000" 
-              secureTextEntry={true} 
+              placeholderTextColor="#000"
+              secureTextEntry={true}
             />
           )}
           name="password"
@@ -102,8 +100,8 @@ export function SignUp() {
               onChangeText={onChange}
               value={value}
               placeholder="Digite novamente a senha"
-              placeholderTextColor="#000" 
-              secureTextEntry={true} 
+              placeholderTextColor="#000"
+              secureTextEntry={true}
             />
           )}
           name="password"
@@ -111,7 +109,7 @@ export function SignUp() {
 
         <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
         <View style={styles.signUp}>
-            <RectButton 
+            <RectButton
               style={styles.btnSignUp}
               onPress={handleSignIn}
             >
@@ -123,14 +121,14 @@ export function SignUp() {
         </View>
 
         <View style={styles.auth}>
-          <ButtonSocial 
-            title="Cadastrar com Google" 
-            onPress={handleSignInGoogle} 
+          <ButtonSocial
+            title="Cadastrar com Google"
+            onPress={handleSignInGoogle}
           />
         </View>
 
-        <ButtonSocial 
-          title="Cadastrar com Facebook" 
+        <ButtonSocial
+          title="Cadastrar com Facebook"
           onPress={handleSignInFacebook}
           isFacebook={true}
         />
