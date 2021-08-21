@@ -8,14 +8,17 @@ export function ScrollTicketList() {
   return (
     <ScrollView
       horizontal
-      style={styles.container}  
-      showsHorizontalScrollIndicator={false}  
+      style={styles.container}
+      showsHorizontalScrollIndicator={false}
     >
     {
-      acoes.map(ac => (
-        <TicketListWallet 
-          key={ac.id}
-          title={ac.name}
+      acoes.map(tckt => (
+        <TicketListWallet
+          key={tckt.id}
+          title={tckt.name}
+          img={tckt.url}
+          price={tckt.value}
+          quantity={tckt.qtd}
         />
       ))
     }
