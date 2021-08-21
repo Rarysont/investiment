@@ -47,7 +47,7 @@ export function SignUp() {
   }
 
   return (
-    <Background>
+    <Background isSign={true}>
       <View style={styles.container}>
         <Text style={styles.textHeader}>Crie a sua conta</Text>
         <Controller

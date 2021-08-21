@@ -7,18 +7,19 @@ import GoogleIcon from '@expo/vector-icons/FontAwesome';
 
 import styles from './styles.less';
 
-export function ButtonSocial({ title, isFacebook, ...rest }) {
+export function ButtonSocial({ title, isFacebook, isLogin, ...rest }) {
+  const backgroundColorLogin = isLogin ? '#FFF' : '#028090'
   return (
-    <RectButton style={styles.container} {...rest}>
+    <RectButton style={[styles.container, { backgroundColor: isLogin ? '#028090' : '#FFF'}]} {...rest}>
       <View style={styles.iconWrapper}>
         {isFacebook ? (
-          <FacebookIcon name="facebook" size={32} color="#0A1033" />
+          <FacebookIcon name="facebook" size={32} color={backgroundColorLogin} />
         ) : (
-          <GoogleIcon name="google" size={32} color="#0A1033" />
+          <GoogleIcon name="google" size={32} color={backgroundColorLogin} />
         )}
       </View>
 
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, { color: isLogin ? '#FFF' : '#028090'}]}>{title}</Text>
     </RectButton>
   );
 }

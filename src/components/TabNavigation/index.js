@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, TouchableOpacity  } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { Background } from '../background';
 
 import { MyList } from '../../screens/MyList';
@@ -46,7 +47,7 @@ function MyTabBar({ state, descriptors, navigation }) {
         };
 
         return (
-          <Background key={index}>
+          <Background key={index} isTabNavigation={true}>
             <TouchableOpacity
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
@@ -57,19 +58,11 @@ function MyTabBar({ state, descriptors, navigation }) {
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginbottom: 3,
-                borderTopWidth: isFocused ? 1 : 0,
-                borderTopColor: isFocused && '#FFF',
+                borderTopWidth: isFocused ? 2 : 0,
+                borderTopColor: isFocused && '#028090',
               }}
             >
-              <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
-              <Text style={{
-                color: isFocused ? '#1CC0A0' : '#FFF',
-                fontFamily: 'Inter_500Medium',
-                fontSize: 12,
-                textAlign: 'center',
-                }}>
-                {route.name}
-              </Text>
+              <Icon name={options.tabBarLabel} size={25} color={isFocused ? '#028090' : '#B5B3B3'} />
             </TouchableOpacity>
           </Background>
         );
@@ -87,7 +80,7 @@ export function TabsNavigation(){
         name="Minha Lista"
         component={MyList}
         options={{
-          tabBarLabel: 'th-list'
+          tabBarLabel: 'home'
         }}
       />
 
@@ -103,7 +96,7 @@ export function TabsNavigation(){
         name="Perfil"
         component={Profile}
         options={{
-          tabBarLabel: 'user'
+          tabBarLabel: 'user-alt'
         }}
       />
     </Tab.Navigator>

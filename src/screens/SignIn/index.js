@@ -94,7 +94,7 @@ export function SignIn() {
             name="password"
           />
 
-          <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
+          <CustomButton title="Entrar" isLogin={true} onPress={handleSubmit(onSubmit)} />
           <View style={styles.signUp}>
               <RectButton
                 style={styles.btnSignUp}
@@ -110,6 +110,7 @@ export function SignIn() {
           <View style={styles.auth}>
             <ButtonSocial
               title="Entrar com Google"
+              isLogin={true}
               onPress={handleSignIn}
             />
           </View>
@@ -117,6 +118,7 @@ export function SignIn() {
           <ButtonSocial
             title="Entrar com Facebook"
             onPress={handleSignInFacebook}
+            isLogin={true}
             isFacebook={true}
           />
         </View>
