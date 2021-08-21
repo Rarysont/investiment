@@ -24,6 +24,7 @@ function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
 
+  console.log(APP_ID)
   async function signInGoogle() {
     try {
       setLoading(true);

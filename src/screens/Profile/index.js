@@ -15,20 +15,17 @@ export function Profile(){
       <ScrollView>
         <View style={styles.containerPage}>
           <Text style={styles.textPerfil}>Perfil</Text>
-          <View style={{
-            borderWidth: 3,
-            borderTopColor: '#FFF',
-            width: '80%',
-            justifyContent: 'center',
-            textAlign: 'center',
-            display: 'flex'
-          }} />
+          <View style={styles.borderProfile}/>
         </View>
 
         <View style={styles.container}>
           <Image
             source={{ uri: userInfo.picture }}
-            style={styles.imageUser}
+            style={[styles.imageUser, {
+              borderWidth: 3,
+              borderRadius: 180,
+              borderColor: '#028090'
+            }]}
           />
 
           <View style={styles.containerButtons}>
