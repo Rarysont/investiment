@@ -14,29 +14,27 @@ export function Profile(){
     <Background>
       <ScrollView>
         <View style={styles.containerPage}>
-          <Text style={styles.textPerfil}>Perfil</Text>
-          <View style={{
-            borderWidth: 3,
-            borderTopColor: '#FFF',
-            width: '80%',
-            justifyContent: 'center',
-            textAlign: 'center',
-            display: 'flex'
-          }} />
+          <Text style={styles.titlePage}>PERFIL</Text>
+          <View style={styles.borderProfile}/>
         </View>
 
         <View style={styles.container}>
           <Image
             source={{ uri: userInfo.picture }}
-            style={styles.imageUser}
+            style={[styles.imageUser, {
+              borderWidth: 3,
+              borderRadius: 180,
+              borderColor: '#E51C44'
+            }]}
           />
+          <Text style={styles.dataUser}>{userInfo.name}</Text>
+          <Text style={styles.dataUser}>{userInfo.email}</Text>
 
           <View style={styles.containerButtons}>
-            <ButtonPerfil title={userInfo.name} text="Nome"/>
-            <ButtonPerfil title={userInfo.email} text="Email"/>
-            <ButtonPerfil text="CPF"/>
-            <ButtonPerfil text="Telefone"/>
-            <ButtonPerfil text="RG"/>
+            <ButtonPerfil title="Notificações" text="CPF" icone="notifications" />
+            <ButtonPerfil title="Editar Perfil" text="CPF" icone="person" />
+            <ButtonPerfil title="Suporte" text="CPF" icone="headset" />
+            <ButtonPerfil title="Politica de Privacidade" text="CPF" icone="reader" />
           </View>
 
           <View style={styles.logoutContainer}>
