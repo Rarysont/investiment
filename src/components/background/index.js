@@ -4,8 +4,9 @@ import styles from './styles.less';
 
 export function Background({ children }) {
   return (
-    <LinearGradient style={styles.container} colors={['#0A1033', '#0E1647']}>
+    <LinearGradient style={styles.container} colors={['#FFF', '#FFF']}>
       {children}
     </LinearGradient>
   );
+
 }

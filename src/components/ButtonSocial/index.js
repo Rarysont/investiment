@@ -9,16 +9,16 @@ import styles from './styles.less';
 
 export function ButtonSocial({ title, isFacebook, ...rest }) {
   return (
-    <RectButton style={styles.container} {...rest}>
+    <RectButton style={[styles.container, { backgroundColor: '#FFF'}]} {...rest}>
       <View style={styles.iconWrapper}>
         {isFacebook ? (
-          <FacebookIcon name="facebook" size={32} color="#0A1033" />
+          <FacebookIcon name="facebook" size={32} color="#000" />
         ) : (
-          <GoogleIcon name="google" size={32} color="#0A1033" />
+          <GoogleIcon name="google" size={32} color="#000" />
         )}
       </View>
 
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, { color: '#050b17'}]}>{title}</Text>
     </RectButton>
   );
 }
