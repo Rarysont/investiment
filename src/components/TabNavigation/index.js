@@ -59,10 +59,10 @@ function MyTabBar({ state, descriptors, navigation }) {
                 alignItems: 'center',
                 marginbottom: 3,
                 borderTopWidth: isFocused ? 2 : 0,
-                borderTopColor: isFocused && '#028090',
+                borderTopColor: isFocused && '#050b17',
               }}
             >
-              <Icon name={options.tabBarLabel} size={25} color={isFocused ? '#028090' : '#B5B3B3'} />
+              <Icon name={options.tabBarLabel} size={25} color={isFocused ? '#050b17' : '#B5B3B3'} />
             </TouchableOpacity>
           </Background>
         );

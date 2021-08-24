@@ -107,7 +107,7 @@ export function SignIn() {
             <Text style={styles.textEntry}>Ou</Text>
           </View>
 
-          <View style={styles.auth}>
+          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8}]}>
             <ButtonSocial
               title="Entrar com Google"
               isLogin={true}
@@ -115,12 +115,14 @@ export function SignIn() {
             />
           </View>
 
-          <ButtonSocial
-            title="Entrar com Facebook"
-            onPress={handleSignInFacebook}
-            isLogin={true}
-            isFacebook={true}
-          />
+          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8}]}>
+            <ButtonSocial
+              title="Entrar com Facebook"
+              onPress={handleSignInFacebook}
+              isLogin={true}
+              isFacebook={true}
+            />
+          </View>
         </View>
       </ScrollView>
     </Background>

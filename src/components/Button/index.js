@@ -5,7 +5,7 @@ import styles from './styles.less';
 
 export function CustomButton({ title, isLogin, ...rest }) {
   return (
-    <RectButton style={[styles.container, { backgroundColor: isLogin ? '#028090' : '#F0F3BD'}]} {...rest}>
+    <RectButton style={[styles.container, { backgroundColor: isLogin ? '#E51C44' : '#FFF'}]} {...rest}>
       <Text style={[styles.title, { color: isLogin ? '#FFF' : '#000' }]}>{title}</Text>
     </RectButton>
   );
