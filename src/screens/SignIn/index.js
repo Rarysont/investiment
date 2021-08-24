@@ -94,7 +94,7 @@ export function SignIn() {
             name="password"
           />
 
-          <CustomButton title="Entrar" isLogin={true} onPress={handleSubmit(onSubmit)} />
+          <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
           <View style={styles.signUp}>
               <RectButton
                 style={styles.btnSignUp}

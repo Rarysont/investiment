@@ -47,7 +47,7 @@ export function SignUp() {
   }
 
   return (
-    <Background isSign={true}>
+    <Background>
       <View style={styles.container}>
         <Text style={styles.textHeader}>Crie a sua conta</Text>
         <Controller
@@ -120,18 +120,28 @@ export function SignUp() {
           <Text style={styles.textEntry}>Ou cadastre-se com</Text>
         </View>
 
-        <View style={styles.auth}>
+        <View style={[styles.auth, {
+          borderWidth: 3,
+          borderColor: '#000',
+          borderRadius: 8
+        }]}>
           <ButtonSocial
             title="Cadastrar com Google"
             onPress={handleSignInGoogle}
           />
         </View>
 
-        <ButtonSocial
-          title="Cadastrar com Facebook"
-          onPress={handleSignInFacebook}
-          isFacebook={true}
-        />
+        <View style={[styles.auth, {
+          borderWidth: 3,
+          borderColor: '#000',
+          borderRadius: 8
+        }]}>
+          <ButtonSocial
+            title="Cadastrar com Facebook"
+            onPress={handleSignInFacebook}
+            isFacebook={true}
+          />
+        </View>
       </View>
     </Background>
   );

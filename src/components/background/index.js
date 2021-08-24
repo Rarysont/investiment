@@ -2,9 +2,9 @@ import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import styles from './styles.less';
 
-export function Background({ isSign, children }) {
+export function Background({ children }) {
   return (
-    <LinearGradient style={styles.container} colors={isSign ? ['#028090', '#028090'] : ['#FFF', '#FFF']}>
+    <LinearGradient style={styles.container} colors={['#FFF', '#FFF']}>
       {children}
     </LinearGradient>
   );

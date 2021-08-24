@@ -14,7 +14,7 @@ export function Profile(){
     <Background>
       <ScrollView>
         <View style={styles.containerPage}>
-          <Text style={styles.textPerfil}>PERFIL</Text>
+          <Text style={styles.titlePage}>PERFIL</Text>
           <View style={styles.borderProfile}/>
         </View>
 
@@ -27,14 +27,14 @@ export function Profile(){
               borderColor: '#E51C44'
             }]}
           />
-          <Text>{userInfo.name}</Text>
-          <Text>{userInfo.email}</Text>
+          <Text style={styles.dataUser}>{userInfo.name}</Text>
+          <Text style={styles.dataUser}>{userInfo.email}</Text>
 
           <View style={styles.containerButtons}>
-            <ButtonPerfil title="Notificações" text="CPF"/>
-            <ButtonPerfil title="Editar Perfil" text="CPF"/>
-            <ButtonPerfil title="Suporte" text="CPF" />
-            <ButtonPerfil title="Politica de Privacidade" text="CPF"/>
+            <ButtonPerfil title="Notificações" text="CPF" icone="notifications" />
+            <ButtonPerfil title="Editar Perfil" text="CPF" icone="person" />
+            <ButtonPerfil title="Suporte" text="CPF" icone="headset" />
+            <ButtonPerfil title="Politica de Privacidade" text="CPF" icone="reader" />
           </View>
 
           <View style={styles.logoutContainer}>
