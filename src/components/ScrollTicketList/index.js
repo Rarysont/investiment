@@ -1,27 +1,19 @@
 import React from 'react';
 import { TicketListWallet } from "../TicketListWallet"
 import { acoes } from "../../utils/acoes"
-import { ScrollView } from "react-native";
-import styles from './styles.less'
 
 export function ScrollTicketList() {
   return (
-    <ScrollView
-      horizontal
-      style={styles.container}
-      showsHorizontalScrollIndicator={false}
-    >
-    {
-      acoes.map(tckt => (
+      acoes.map(ac => (
         <TicketListWallet
-          key={tckt.id}
-          title={tckt.name}
-          img={tckt.url}
-          price={tckt.value}
-          quantity={tckt.qtd}
+          key={ac.id}
+          title={ac.name}
+          abr={ac.abr}
+          img={ac.url}
+          price={ac.value}
+          quantity={ac.qtd}
+          percent={ac.percent}
         />
       ))
-    }
-    </ScrollView>
   )
 }

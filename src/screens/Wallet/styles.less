@@ -4,54 +4,46 @@
   flex: 1;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
 }
 
-.text {
-  font-size: 15px;
-  font-family: Inter_700Bold;
-  color: @primary-green;
-  text-align: center;
+.containerGraphic {
+  margin-bottom: 50px;
 }
 
-.containerModal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.btnModal {
-  height: 50px;
-  align-content: center;
-  justify-content: center;
-  border-radius: 8px;
-}
-
-.btnModalTitle {
-  text-align: center;
-  font-size: 15px;
-  font-family: Inter_500Medium;
-  color: @primary-white;
-}
-
-.bar {
-  width: 60px;
-  height: 3px;
-  border-radius: 2px;
-  background-color: @primary-green;
-  align-self: center;
-  margin-top: 13px;
-}
-
-.containerList {
+.containerTicket {
   flex: 1;
-  justify-content: center;
+  display: flex;
   align-items: center;
-}
-
-.myList {
+  justify-content: center;
   width: 100%;
 }
 
-.scrollTicket {
-  margin-bottom: 25px;
+.containerAddTicket {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  padding: 0px 40px;
+}
+
+.titleMyTicket {
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: Inter_500Medium;
+}
+
+.containerQuantityTicket {
+  display: flex;
+  width: 100%;
+  padding-left: 40px;
+  margin-bottom: 15px;
+}
+
+.titleQuantityTicket {
+  color: #000;
+  font-size: 14px;
+  font-family: Inter_500Medium;
 }

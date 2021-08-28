@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Text, View  } from 'react-native';
+import { Text, View, ScrollView  } from 'react-native';
 import { Background } from '../../components/background';
 import { Dimensions } from "react-native";
 import { ScrollTicketList } from '../../components/ScrollTicketList';
+import { Entypo } from '@expo/vector-icons';
 import {
   LineChart,
   BarChart,
@@ -67,23 +68,35 @@ export function Wallet(){
 
   return(
     <Background>
-      <View style={styles.container}>
-        <PieChart
-          data={data}
-          width={screenWidth}
-          height={220}
-          chartConfig={chartConfig}
-          accessor={"population"}
-          backgroundColor={"transparent"}
-          paddingLeft={"10"}
-          center={[10, 10]}
-          absolute
-        />
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.containerGraphic}>
+            <PieChart
+              data={data}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              accessor={"population"}
+              backgroundColor={"transparent"}
+              paddingLeft={"10"}
+              center={[10, 10]}
+              absolute
+            />
+          </View>
+            <View style={styles.containerTicket}>
+              <View style={styles.containerAddTicket}>
+                <Text style={styles.titleMyTicket}>Meus Tickets</Text>
+                <Entypo name="plus" size={24} color="black" />
+              </View>
 
-      <View style={styles.scrollTicket}>
-        <ScrollTicketList />
-      </View>
+              <View style={styles.containerQuantityTicket}>
+                <Text style={styles.titleQuantityTicket}>7 ativos</Text>
+              </View>
+
+              <ScrollTicketList />
+            </View>
+        </View>
+      </ScrollView>
     </Background>
   );
 }

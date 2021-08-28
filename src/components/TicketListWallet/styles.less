@@ -1,33 +1,77 @@
 @import "../../global/styles/variables.less";
 
 .container {
-  width: 200px;
-  margin-right: 20px;
-  height: 200;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 8px;
+  width: 320px;
+  border-radius: 16px;
+  display: flex;
+  height: 90px;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
-// .content {
-//   width: 100;
-//   height: 150;
-//   border-radius: 8px;
-//   align-items: center;
-//   justify-content: space-between;
-// }
-.containerImage {
-  border: 1px solid @primary-green;
-  border-radius: 8px;
-  margin-top: 10px;
+.containerData {
+  flex-direction: row;
+  align-items: center;
+}
+
+.containerImage{
+  margin-left: 10px;
+  margin-right: 8px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 12px;
+  border: 2px solid #ccc;
 }
 
 .image {
   width: 50px;
   height: 50px;
+  border-radius: 12px;
 }
 
-.title {
+.bar {
+  width: 4px;
+  height: 55px;
+  background-color: #ccc;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.containerNameAction {
+  display: flex;
+  width: 130px;
+  height: 50px;
+  flex-direction: column;
+}
+
+.containerPrice {
+  display: flex;
+  width: 130px;
+  height: 50px;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 55px;
+}
+
+.nameTicket {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.price {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+}
+
+.percent {
   font-size: 15px;
+  font-family: sans-serif;
+  color: @primary-green;
+  font-weight: bold;
 }
 
