@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, TouchableOpacity  } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { Background } from '../background';
 
 import { MyList } from '../../screens/MyList';
@@ -23,12 +24,6 @@ function MyTabBar({ state, descriptors, navigation }) {
     <View style={styles.tabNavigation}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
 
         const isFocused = state.index === index;
 
@@ -52,30 +47,22 @@ function MyTabBar({ state, descriptors, navigation }) {
         };
 
         return (
-          <Background key={index}>
+          <Background key={index} isTabNavigation={true}>
             <TouchableOpacity
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={{ 
+              style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginbottom: 3,
-                borderTopWidth: isFocused ? 1 : 0,
-                borderTopColor: isFocused && '#FFF',
+                borderTopWidth: isFocused ? 2 : 0,
+                borderTopColor: isFocused && '#050b17',
               }}
             >
-              <Icon name={options.tabBarLabel} size={20} color={isFocused ? '#1CC0A0' : '#FFF'} />
-              <Text style={{ 
-                color: isFocused ? '#1CC0A0' : '#FFF',
-                fontFamily: 'Inter_500Medium',
-                fontSize: 12,
-                textAlign: 'center',
-                }}>
-                {route.name}
-              </Text>
+              <Icon name={options.tabBarLabel} size={25} color={isFocused ? '#050b17' : '#B5B3B3'} />
             </TouchableOpacity>
           </Background>
         );
@@ -89,15 +76,15 @@ export function TabsNavigation(){
     <Tab.Navigator
       tabBar={props => <MyTabBar {...props} />}
     >
-      <Tab.Screen 
+      <Tab.Screen
         name="Minha Lista"
         component={MyList}
         options={{
-          tabBarLabel: 'th-list'
+          tabBarLabel: 'home'
         }}
       />
 
-      <Tab.Screen 
+      <Tab.Screen
         name="Carteira"
         component={Wallet}
         options={{
@@ -105,11 +92,11 @@ export function TabsNavigation(){
          }}
       />
 
-      <Tab.Screen 
+      <Tab.Screen
         name="Perfil"
         component={Profile}
         options={{
-          tabBarLabel: 'user'
+          tabBarLabel: 'user-alt'
         }}
       />
     </Tab.Navigator>

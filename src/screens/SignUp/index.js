@@ -1,9 +1,8 @@
 import React from 'react';
-import { 
-  View, 
-  Image, 
+import {
+  View,
   TextInput,
-  Text, 
+  Text,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -12,13 +11,11 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import styles from './styles.less';
 
-import Login from '../../assets/login.png';
 import { useAuth } from '../../hooks/auth';
 
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';
-import { ButtonIconGoogle } from '../../components/ButtonGoogle';
-import { ButtonIconFacebook } from '../../components/ButtonFacebook';
+import { ButtonSocial } from '../../components/ButtonSocial';
 
 
 export function SignUp() {
@@ -39,7 +36,7 @@ export function SignUp() {
 
   function handleSignIn() {
     navigation.navigate('SignIn');
-  } 
+  }
 
   async function handleSignInFacebook() {
     try {
@@ -84,8 +81,8 @@ export function SignUp() {
               onChangeText={onChange}
               value={value}
               placeholder="Digite a senha"
-              placeholderTextColor="#000" 
-              secureTextEntry={true} 
+              placeholderTextColor="#000"
+              secureTextEntry={true}
             />
           )}
           name="password"
@@ -103,8 +100,8 @@ export function SignUp() {
               onChangeText={onChange}
               value={value}
               placeholder="Digite novamente a senha"
-              placeholderTextColor="#000" 
-              secureTextEntry={true} 
+              placeholderTextColor="#000"
+              secureTextEntry={true}
             />
           )}
           name="password"
@@ -112,7 +109,7 @@ export function SignUp() {
 
         <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
         <View style={styles.signUp}>
-            <RectButton 
+            <RectButton
               style={styles.btnSignUp}
               onPress={handleSignIn}
             >
@@ -123,11 +120,28 @@ export function SignUp() {
           <Text style={styles.textEntry}>Ou cadastre-se com</Text>
         </View>
 
-        <View style={styles.auth}>
-          <ButtonIconGoogle  title="Cadastrar com Google" onPress={handleSignInGoogle} />
+        <View style={[styles.auth, {
+          borderWidth: 3,
+          borderColor: '#000',
+          borderRadius: 8
+        }]}>
+          <ButtonSocial
+            title="Cadastrar com Google"
+            onPress={handleSignInGoogle}
+          />
         </View>
 
-        <ButtonIconFacebook title="Cadastrar com Facebook" onPress={handleSignInFacebook} />
+        <View style={[styles.auth, {
+          borderWidth: 3,
+          borderColor: '#000',
+          borderRadius: 8
+        }]}>
+          <ButtonSocial
+            title="Cadastrar com Facebook"
+            onPress={handleSignInFacebook}
+            isFacebook={true}
+          />
+        </View>
       </View>
     </Background>
   );

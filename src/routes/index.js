@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { 
-  Image, 
+import {
+  Image,
   View,
   ActivityIndicator
 } from 'react-native';
@@ -15,12 +15,12 @@ export function Routes(){
 
   if(loading) {
     return (
-      <View 
-        style={{justifyContent: 'center', alignItems: 'center', flex: 1 }} 
+      <View
+        style={{justifyContent: 'center', alignItems: 'center', flex: 1 }}
       >
-        <ActivityIndicator 
-          color="#1CC0A0" 
-          style={{justifyContent: 'center', alignItems: 'center' }} 
+        <ActivityIndicator
+          color="#1CC0A0"
+          style={{justifyContent: 'center', alignItems: 'center' }}
         />
       </View>
     );
@@ -28,7 +28,7 @@ export function Routes(){
 
   return(
     <NavigationContainer>
-      {userInfo.id 
+      {userInfo.id
         ? <AuthRoutes />
         : <AppRoutes />}
     </NavigationContainer>

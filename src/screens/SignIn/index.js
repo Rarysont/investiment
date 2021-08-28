@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  View, 
-  Image, 
+import {
+  View,
+  Image,
   TextInput,
   Text,
   ScrollView,
@@ -18,9 +18,7 @@ import { useAuth } from '../../hooks/auth';
 
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';
-import { ButtonIconGoogle } from '../../components/ButtonGoogle';
-import { ButtonIconFacebook } from '../../components/ButtonFacebook';
-
+import { ButtonSocial } from '../../components/ButtonSocial';
 
 export function SignIn() {
   const navigation = useNavigation();
@@ -39,7 +37,7 @@ export function SignIn() {
 
   function handleSignUp() {
     navigation.navigate('SignUp');
-  } 
+  }
 
   async function handleSignInFacebook() {
     try {
@@ -53,7 +51,7 @@ export function SignIn() {
     <Background>
       <ScrollView>
         <View style={styles.container}>
-          <Image 
+          <Image
             source={Login}
             style={styles.image}
           />
@@ -89,8 +87,8 @@ export function SignIn() {
                 onChangeText={onChange}
                 value={value}
                 placeholder="Password"
-                placeholderTextColor="#000" 
-                secureTextEntry={true} 
+                placeholderTextColor="#000"
+                secureTextEntry={true}
               />
             )}
             name="password"
@@ -98,7 +96,7 @@ export function SignIn() {
 
           <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
           <View style={styles.signUp}>
-              <RectButton 
+              <RectButton
                 style={styles.btnSignUp}
                 onPress={handleSignUp}
               >
@@ -109,17 +107,22 @@ export function SignIn() {
             <Text style={styles.textEntry}>Ou</Text>
           </View>
 
-          <View style={styles.auth}>
-            <ButtonIconGoogle 
-              title="Entrar com Google" 
-              onPress={handleSignIn} 
+          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8}]}>
+            <ButtonSocial
+              title="Entrar com Google"
+              isLogin={true}
+              onPress={handleSignIn}
             />
           </View>
 
-          <ButtonIconFacebook 
-            title="Entrar com Facebook" 
-            onPress={handleSignInFacebook} 
-          />
+          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8}]}>
+            <ButtonSocial
+              title="Entrar com Facebook"
+              onPress={handleSignInFacebook}
+              isLogin={true}
+              isFacebook={true}
+            />
+          </View>
         </View>
       </ScrollView>
     </Background>

@@ -15,13 +15,13 @@ export function AppRoutes() {
           backgroundColor: '#0A1033'
         }
       }}
-    > 
-      <Screen 
+    >
+      <Screen
         name="SignIn"
         component={SignIn}
       />
 
-      <Screen 
+      <Screen
         name="SignUp"
         component={SignUp}
       />
