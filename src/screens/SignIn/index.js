@@ -5,6 +5,7 @@ import {
   TextInput,
   Text,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -30,8 +31,16 @@ export function SignIn() {
   async function handleSignIn() {
     try {
       await signInGoogle();
-    }catch (error) {
-      console.log(error);
+    } catch (error) {
+      if (error) {
+        Alert.alert("Erro ao tentar login com Google", error.message, [
+          {
+            text: "Ok"
+          }
+        ])
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -42,8 +51,16 @@ export function SignIn() {
   async function handleSignInFacebook() {
     try {
       await signInFacebook();
-    }catch (error) {
-      console.log(error);
+    } catch (error) {
+      if (error) {
+        Alert.alert("Erro ao tentar login com Faccebook", error.message, [
+          {
+            text: "Ok"
+          }
+        ])
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -78,7 +95,7 @@ export function SignIn() {
           <Controller
             control={control}
             rules={{
-            maxLength: 100,
+              maxLength: 100,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
@@ -96,18 +113,18 @@ export function SignIn() {
 
           <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
           <View style={styles.signUp}>
-              <RectButton
-                style={styles.btnSignUp}
-                onPress={handleSignUp}
-              >
-                <Text style={styles.btnSignUpTitle}>
-                  Ainda não tem conta? Cadastre-se
-                </Text>
-              </RectButton>
+            <RectButton
+              style={styles.btnSignUp}
+              onPress={handleSignUp}
+            >
+              <Text style={styles.btnSignUpTitle}>
+                Ainda não tem conta? Cadastre-se
+              </Text>
+            </RectButton>
             <Text style={styles.textEntry}>Ou</Text>
           </View>
 
-          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8}]}>
+          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8 }]}>
             <ButtonSocial
               title="Entrar com Google"
               isLogin={true}
@@ -115,7 +132,7 @@ export function SignIn() {
             />
           </View>
 
-          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8}]}>
+          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8 }]}>
             <ButtonSocial
               title="Entrar com Facebook"
               onPress={handleSignInFacebook}
