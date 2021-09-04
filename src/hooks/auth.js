@@ -6,6 +6,8 @@ import React,
   useEffect,
 } from 'react';
 
+import { Alert } from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as Google from 'expo-google-app-auth';
@@ -47,7 +49,13 @@ function AuthProvider({ children }) {
         setUserInfo(userData);
       }
     } catch (error) {
-      console.log(error);
+      if (error) {
+        Alert.alert("Erro ao tentar login com Google", "Tente novamente", [
+          {
+            text: "Ok"
+          }
+        ])
+      }
     } finally {
       setLoading(false);
     }
@@ -62,7 +70,7 @@ function AuthProvider({ children }) {
     try {
       setLoading(true);
       await Facebook.initializeAsync({
-        appId: APP_ID,
+        appId: 'APP_ID',
       });
       const {
         type,
@@ -94,7 +102,13 @@ function AuthProvider({ children }) {
         });
       }
     } catch (error){
-      console.log(error);
+      if (error) {
+        Alert.alert("Erro ao tentar login com Facebook", "Tente novamente", [
+          {
+            text: "Ok"
+          }
+        ])
+      }
     } finally {
       setLoading(false);
     }
