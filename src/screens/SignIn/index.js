@@ -33,14 +33,12 @@ export function SignIn() {
       await signInGoogle();
     } catch (error) {
       if (error) {
-        Alert.alert("Erro ao tentar login com Google", error.message, [
+        Alert.alert("Erro ao tentar login com Google", "Tente novamente", [
           {
             text: "Ok"
           }
         ])
       }
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -53,14 +51,12 @@ export function SignIn() {
       await signInFacebook();
     } catch (error) {
       if (error) {
-        Alert.alert("Erro ao tentar login com Faccebook", error.message, [
+        Alert.alert("Erro ao tentar login com Faccebook", "Tente novamente", [
           {
             text: "Ok"
           }
         ])
       }
-    } finally {
-      setLoading(false);
     }
   }
 
