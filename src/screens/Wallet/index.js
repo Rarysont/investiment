@@ -14,6 +14,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { ModalInfoPercent } from '../../components/ModalInfoPercent';
 import { Background } from '../../components/background';
 import { ScrollTicketList } from '../../components/ScrollTicketList';
+import Graph from '../../components/Graph';
 
 import styles from './styles';
 
@@ -86,7 +87,8 @@ export function Wallet(){
     <Background>
       <ScrollView>
         <View style={styles.container}>
-          <View style={styles.containerTitleWallet}>
+        <Graph />
+          {/* <View style={styles.containerTitleWallet}>
             <Text style={styles.titleWallet}>Carteira</Text>
             <View style={styles.containerIcons}>
               <RectButton onPress={() => setEye(eye ? false : true)}>
@@ -124,6 +126,7 @@ export function Wallet(){
               center={[10, 10]}
               absolute
             />
+
           </View>
             <View style={styles.containerTicket}>
               <View style={styles.containerAddTicket}>
@@ -136,7 +139,7 @@ export function Wallet(){
               </View>
 
               <ScrollTicketList />
-            </View>
+            </View> */}
         </View>
       </ScrollView>
     </Background>

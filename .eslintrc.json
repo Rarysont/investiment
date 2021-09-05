@@ -32,6 +32,7 @@
       "react/prop-types": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "react/jsx-props-no-spreading": ["error", {"custom": "ignore"}],
-      "import/no-duplicates": ["error", { "includeExports": true }]
+      "import/no-duplicates": ["error", { "includeExports": true }],
+      "reanimated/no-multiple-animated-style-usages": 0
     }
 }
