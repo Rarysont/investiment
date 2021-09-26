@@ -19,7 +19,6 @@ const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const SELECTION_WIDTH = width - 32;
 const BUTTON_WIDTH = (width - 32) / graphs.length;
-const SIZET = SIZE - 100;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -48,8 +47,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Graph = () => {
+const Graph = ({ route }) => {
   const translation = useVector();
+  const { coupon } = route.params;
   const transition = useSharedValue(0);
   const previous = useSharedValue(0);
   const current = useSharedValue(0);
@@ -67,7 +67,7 @@ const Graph = () => {
     <View style={styles.container}>
       {/* <Header translation={translation} index={current} /> */}
       <View>
-        <Svg width={SIZET} height={SIZET}>
+        <Svg width={SIZE} height={SIZE}>
           <AnimatedPath
             animatedProps={animatedProps}
             fill="transparent"

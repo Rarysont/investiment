@@ -28,37 +28,65 @@ export function Wallet(){
   const percent = '37,40 (0,18%)';
   const data = [
     {
-      name: "Seoul",
-      population: 21500000,
-      color: "rgba(131, 167, 234, 1)",
+      name: "MGLU3",
+      quantity: 30,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      name: "Toronto",
-      population: 2800000,
-      color: "#F00",
+      name: "VALE3",
+      quantity: 10,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      name: "Beijing",
-      population: 527612,
-      color: "red",
+      name: "BBDC4",
+      quantity: 2,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      name: "New York",
-      population: 8538000,
-      color: "#ffffff",
+      name: "VVAR3",
+      quantity: 7,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      name: "Moscow",
-      population: 11920000,
-      color: "rgb(0, 0, 255)",
+      name: "LREN3",
+      quantity: 8,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "AMER3",
+      quantity: 14,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "CVCB3",
+      quantity: 13,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "NTC03",
+      quantity: 50,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "SBSP3",
+      quantity: 70,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     }
@@ -72,7 +100,7 @@ export function Wallet(){
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
+    useShadowColorFromDataset: false
   };
 
   function handleCloseModalInfo(){
@@ -87,8 +115,7 @@ export function Wallet(){
     <Background>
       <ScrollView>
         <View style={styles.container}>
-        <Graph />
-          {/* <View style={styles.containerTitleWallet}>
+          <View style={styles.containerTitleWallet}>
             <Text style={styles.titleWallet}>Carteira</Text>
             <View style={styles.containerIcons}>
               <RectButton onPress={() => setEye(eye ? false : true)}>
@@ -120,13 +147,12 @@ export function Wallet(){
               width={screenWidth}
               height={220}
               chartConfig={chartConfig}
-              accessor={"population"}
+              accessor={"quantity"}
               backgroundColor={"transparent"}
               paddingLeft={"10"}
               center={[10, 10]}
-              absolute
+              absolute={false}
             />
-
           </View>
             <View style={styles.containerTicket}>
               <View style={styles.containerAddTicket}>
@@ -137,9 +163,8 @@ export function Wallet(){
               <View style={styles.containerQuantityTicket}>
                 <Text style={styles.titleQuantityTicket}>7 ativos</Text>
               </View>
-
               <ScrollTicketList />
-            </View> */}
+            </View>
         </View>
       </ScrollView>
     </Background>
