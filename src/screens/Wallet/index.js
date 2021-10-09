@@ -14,7 +14,6 @@ import { AntDesign } from '@expo/vector-icons';
 import { ModalInfoPercent } from '../../components/ModalInfoPercent';
 import { Background } from '../../components/background';
 import { ScrollTicketList } from '../../components/ScrollTicketList';
-import Graph from '../../components/Graph';
 
 import styles from './styles';
 

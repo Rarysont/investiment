@@ -41,29 +41,29 @@ const buildGraph = (datapoints, label) => {
 
 export const graphs = [
   {
-    label: "1H",
+    label: "1 HORA",
     value: 0,
-    data: buildGraph(values.hour, "Last Hour"),
+    data: buildGraph(values.hour, "Última hora"),
   },
   {
-    label: "1D",
+    label: "1 DIA",
     value: 1,
-    data: buildGraph(values.day, "Today"),
+    data: buildGraph(values.day, "Hoje"),
   },
   {
-    label: "1M",
+    label: "1 MÊS",
     value: 2,
-    data: buildGraph(values.month, "Last Month"),
+    data: buildGraph(values.month, "Último mês"),
   },
   {
-    label: "1Y",
+    label: "1 ANO",
     value: 3,
-    data: buildGraph(values.year, "This Year"),
+    data: buildGraph(values.year, "Último ano"),
   },
   {
-    label: "all",
+    label: "TUDO",
     value: 4,
-    data: buildGraph(values.all, "All time"),
+    data: buildGraph(values.all, "Histórico completo"),
   },
 ];
 

@@ -11,21 +11,25 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { mixPath, useVector } from "react-native-redash";
 
 import { graphs, SIZE } from "../../utils/Model";
-// import Header from "./Header";
+import { Header } from "../Header";
+import HeaderGraph from "./HeaderGraph";
 import Cursor from "../CursorGraph";
 
 const { width } = Dimensions.get("window");
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const SELECTION_WIDTH = width - 32;
-const BUTTON_WIDTH = (width - 32) / graphs.length;
+const BUTTON_WIDTH = (width - 20) / graphs.length;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
   },
+  containerSvg: {
+    marginTop: 20,
+  },
   backgroundSelection: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: "#1CC0A0",
     ...StyleSheet.absoluteFillObject,
     width: BUTTON_WIDTH,
     borderRadius: 8,
@@ -36,11 +40,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   labelContainer: {
-    padding: 16,
+    padding: 10,
     width: BUTTON_WIDTH,
   },
   label: {
-    fontSize: 16,
+    fontSize: 14,
     color: "black",
     fontWeight: "bold",
     textAlign: "center",
@@ -65,8 +69,9 @@ const Graph = ({ route }) => {
   }));
   return (
     <View style={styles.container}>
-      {/* <Header translation={translation} index={current} /> */}
-      <View>
+      <Header title="Gráfico" />
+      <HeaderGraph translation={translation} index={current} />
+      <View style={styles.containerSvg}>
         <Svg width={SIZE} height={SIZE}>
           <AnimatedPath
             animatedProps={animatedProps}
