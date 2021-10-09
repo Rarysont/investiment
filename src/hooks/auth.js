@@ -70,7 +70,7 @@ function AuthProvider({ children }) {
     try {
       setLoading(true);
       await Facebook.initializeAsync({
-        appId: 'APP_ID',
+        appId: APP_ID,
       });
       const {
         type,
