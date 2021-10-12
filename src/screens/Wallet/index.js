@@ -54,41 +54,6 @@ export function Wallet(){
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
-    {
-      name: "LREN3",
-      quantity: 8,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "AMER3",
-      quantity: 14,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "CVCB3",
-      quantity: 13,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "NTC03",
-      quantity: 50,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "SBSP3",
-      quantity: 70,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    }
   ];
 
   const chartConfig = {
@@ -97,7 +62,7 @@ export function Wallet(){
     backgroundGradientTo: "#08130D",
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    strokeWidth: 2,
     barPercentage: 0.5,
     useShadowColorFromDataset: false
   };
