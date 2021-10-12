@@ -7,11 +7,11 @@ import styles from './styles.less';
 
 export function TicketListWallet({
   title,
-  img,
   price,
   quantity,
   abr,
   percent,
+  image,
   ...rest
 }){
   // const uri = 'https://seeklogo.com/images/B/bradesco-com-degrade-logo-D276931A0A-seeklogo.com.png';
@@ -33,7 +33,7 @@ export function TicketListWallet({
           <View style={styles.containerData}>
             <View style={styles.containerImage}>
               <Image
-                source={{ uri }}
+                source={{ uri: image }}
                 style={styles.image}
                 resizeMode="cover"
               />

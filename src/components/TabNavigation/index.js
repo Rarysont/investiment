@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, TouchableOpacity  } from 'react-native';
+import { View, TouchableOpacity  } from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -80,7 +80,7 @@ export function TabsNavigation(){
         name="Minha Lista"
         component={MyList}
         options={{
-          tabBarLabel: 'home'
+          tabBarLabel: 'list-ul'
         }}
       />
 

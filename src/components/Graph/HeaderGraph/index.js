@@ -32,9 +32,9 @@ const HeaderGraph = ({ translation, index }) => {
     const p = interpolate(
       translation.y.value,
       [0, SIZE],
-      [data?.value?.maxPrice, data?.value?.minPrice]
+      [data.value.maxPrice, data.value.minPrice]
     );
-    return `$ ${round(p, 2).toLocaleString("en-US", { currency: "USD" })}`;
+    return `$ ${round(p, 2).toLocaleString("pt-BR", { currency: "BRL" })}`;
   });
   const percentChange = useDerivedValue(
     () => `${round(data?.value?.percentChange, 3)}%`

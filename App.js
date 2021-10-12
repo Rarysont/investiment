@@ -1,6 +1,8 @@
 import React from 'react';
 import { StatusBar, TextInput, Text } from 'react-native';
 import { Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
+import { Poppins_700Bold, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins';
+
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { Routes } from './src/routes';
@@ -15,6 +17,9 @@ export default function App() {
     Inter_400Regular,
     Inter_500Medium,
     Inter_700Bold,
+    Poppins_700Bold,
+    Poppins_400Regular,
+    Poppins_500Medium,
   });
 
   if (!fontsLoaded) {
