@@ -16,7 +16,7 @@ export function Header({ title, action} ){
 
   return (
     <View
-      style={[styles.container, { borderBottomWidth: 2, borderColor: 'black'}]}
+      style={styles.container}
     >
       <BorderlessButton onPress={handleGoBack}>
         <Feather

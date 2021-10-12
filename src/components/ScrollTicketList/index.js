@@ -7,6 +7,7 @@ export function ScrollTicketList() {
       acoes.map(ac => (
         <TicketListWallet
           key={ac.id}
+          image={ac.image}
           title={ac.name}
           abr={ac.abr}
           img={ac.url}

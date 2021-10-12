@@ -27,40 +27,33 @@ export function Wallet(){
   const percent = '37,40 (0,18%)';
   const data = [
     {
-      name: "Seoul",
-      population: 21500000,
-      color: "rgba(131, 167, 234, 1)",
+      name: "MGLU3",
+      quantity: 30,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      name: "Toronto",
-      population: 2800000,
-      color: "#F00",
+      name: "VALE3",
+      quantity: 10,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      name: "Beijing",
-      population: 527612,
-      color: "red",
+      name: "BBDC4",
+      quantity: 2,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      name: "New York",
-      population: 8538000,
-      color: "#ffffff",
+      name: "VVAR3",
+      quantity: 7,
+      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
-    {
-      name: "Moscow",
-      population: 11920000,
-      color: "rgb(0, 0, 255)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    }
   ];
 
   const chartConfig = {
@@ -69,9 +62,9 @@ export function Wallet(){
     backgroundGradientTo: "#08130D",
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    strokeWidth: 2,
     barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
+    useShadowColorFromDataset: false
   };
 
   function handleCloseModalInfo(){
@@ -118,11 +111,11 @@ export function Wallet(){
               width={screenWidth}
               height={220}
               chartConfig={chartConfig}
-              accessor={"population"}
+              accessor={"quantity"}
               backgroundColor={"transparent"}
               paddingLeft={"10"}
               center={[10, 10]}
-              absolute
+              absolute={false}
             />
           </View>
             <View style={styles.containerTicket}>
@@ -134,7 +127,6 @@ export function Wallet(){
               <View style={styles.containerQuantityTicket}>
                 <Text style={styles.titleQuantityTicket}>7 ativos</Text>
               </View>
-
               <ScrollTicketList />
             </View>
         </View>
