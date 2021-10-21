@@ -31,8 +31,8 @@ function AuthProvider({ children }) {
       setLoading(true);
 
       const { type, accessToken, user } = await Google.logInAsync({
-        androidClientId: GOOGLE_ANDROID_CLIENT_ID,
-        iosClientId: GOOGLE_IOS_CLIENT_ID,
+        androidClientId: '150568413679-lu41k6lt5olatro2j062boosuocrhv4g.apps.googleusercontent.com',
+        iosClientId: '150568413679-dain7elk9usf2id377v94gh6diotjo3j.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       });
 
@@ -70,7 +70,7 @@ function AuthProvider({ children }) {
     try {
       setLoading(true);
       await Facebook.initializeAsync({
-        appId: APP_ID,
+        appId: '496078595025593',
       });
       const {
         type,

@@ -1,5 +1,4 @@
 import React from 'react';
-import { LinearGradient } from 'expo-linear-gradient';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';

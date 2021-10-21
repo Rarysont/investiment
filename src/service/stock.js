@@ -1,4 +1,4 @@
 import api from "./api";
 
 export const getStocks = (params) =>
-  api.get("stock", { params }).then((res) => res.data);
+  api.get("Stock?pCode=VVAR3", { params }).then((res) => res.data);

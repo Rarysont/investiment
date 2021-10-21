@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { TabsNavigation } from '../components/TabNavigation';
 import { EditProfile } from '../screens/EditProfile';
+import { SearchTicket } from '../screens/SearchTicket';
 import Graph from '../components/Graph'
 
 const { Navigator, Screen } = createStackNavigator();
@@ -29,6 +30,11 @@ export function AuthRoutes() {
       <Screen
         name="Graphic"
         component={Graph}
+      />
+
+      <Screen
+        name="SearchTicket"
+        component={SearchTicket}
       />
     </Navigator>
   )
