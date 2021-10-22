@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
+import { basicLogin } from '../service/login';
 
 import { COLLECTION_USERS } from '../../configs/database';
 
@@ -59,11 +60,6 @@ function AuthProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  }
-
-  async function singOut() {
-    setUserInfo({});
-    await AsyncStorage.removeItem(COLLECTION_USERS);
   }
 
   async function signInFacebook() {
@@ -114,6 +110,52 @@ function AuthProvider({ children }) {
     }
   }
 
+  async function login(data) {
+    try {
+      setLoading(true);
+
+      const response = await basicLogin(data);
+
+      if (response.status === 200) {
+        const { value } = response.data;
+
+        const userData = {
+          id: value.id,
+          email: value.email,
+          name: value.fullName,
+          token: value.token,
+          phone: value.phone
+        }
+
+        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
+
+        setUserInfo({
+          id: value.id,
+          email: value.email,
+          name: value.fullName,
+          token: value.token,
+          phone: value.phone
+        });
+      }
+    } catch (error){
+      const err = error.response.data;
+      if (error) {
+        Alert.alert("Erro ao tentar realizar login", err, [
+          {
+            text: "Ok"
+          }
+        ])
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function singOut() {
+    setUserInfo({});
+    await AsyncStorage.removeItem(COLLECTION_USERS);
+  }
+
   async function loadUserStorageData() {
     const storage = await AsyncStorage.getItem(COLLECTION_USERS);
     if (storage) {
@@ -134,6 +176,7 @@ function AuthProvider({ children }) {
       loading,
       token,
       singOut,
+      login,
     }}>
       {children}
     </AuthContext.Provider>

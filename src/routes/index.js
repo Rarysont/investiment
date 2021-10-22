@@ -28,7 +28,7 @@ export function Routes(){
 
   return(
     <NavigationContainer>
-      {userInfo.id
+      {userInfo.token
         ? <AuthRoutes />
         : <AppRoutes />}
     </NavigationContainer>
