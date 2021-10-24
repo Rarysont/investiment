@@ -16,17 +16,18 @@ import styles from './styles.less';
 
 import Login from '../../assets/2login.png';
 import { useAuth } from '../../hooks/auth';
-
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';
 import { ButtonSocial } from '../../components/ButtonSocial';
 
 export function SignIn() {
   const navigation = useNavigation();
-  const { signInGoogle, signInFacebook } = useAuth();
+  const { signInGoogle, signInFacebook, login } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = data => console.log(data);
+  async function onSubmit(data) {
+    await login(data)
+  }
 
   async function handleSignIn() {
     try {
@@ -70,9 +71,13 @@ export function SignIn() {
           />
 
           <Controller
+            name="Username"
             control={control}
             rules={{
-              required: true,
+              required: {
+                message:  'Campo obrigatório',
+                value: true,
+              }
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
@@ -84,14 +89,19 @@ export function SignIn() {
                 placeholderTextColor="#000"
               />
             )}
-            name="username"
+            name="userName"
           />
-          {errors.username && <Text>This is required.</Text>}
+
+          {errors.userName && <Text style={styles.errors}>{errors.userName.message}</Text>}
 
           <Controller
+            name="Password"
             control={control}
             rules={{
-              maxLength: 100,
+              required: {
+                message:  'Campo obrigatório',
+                value: true,
+              }
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
@@ -107,7 +117,10 @@ export function SignIn() {
             name="password"
           />
 
+          {errors.password && <Text style={styles.errors}>{errors.password.message}</Text>}
+
           <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
+
           <View style={styles.signUp}>
             <RectButton
               style={styles.btnSignUp}
