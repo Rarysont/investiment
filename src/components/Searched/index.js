@@ -4,8 +4,7 @@ import Icon from '@expo/vector-icons/MaterialIcons';
 import { Text, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
-export function Searched (tickets) {
-  console.log(tickets, "ticket")
+export function Searched ({ tickets }) {
   return (
     <RectButton style={styles.buttonTickets} key={tickets.id}>
       <View style={[styles.boxTickets, { borderBottomWidth: 2, borderColor: "#9E9EAC" }]}>
