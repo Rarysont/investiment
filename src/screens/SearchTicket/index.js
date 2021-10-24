@@ -17,8 +17,6 @@ export function SearchTicket(){
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = useState("")
   const [isFocused, setIsFocused] = useState(false)
-  const [momentumScroll, setMomentumScroll] = useState("")
-  const [nextPage, setNextPage] = useState(true)
 
   useEffect(() => {
     loadSearched()
@@ -45,8 +43,6 @@ export function SearchTicket(){
   async function loadSearched() {
     try {
       setLoading(true);
-
-      console.log(search, "val")
 
       const response = await getStocks({ pPage: page, pCount: perPage, pCodeFilter: search });
 
@@ -101,14 +97,7 @@ export function SearchTicket(){
             keyExtractor={item => item.id}
             data={tickets}
             renderItem={({ item }) => <Searched tickets={item} />}
-            // onEndReached={() => {
-            //   if(!momentumScroll) {
-            //     setMomentumScroll(true)
-            //     loadSearched()
-            //   }
-            // }}
             onMomentumScrollEnd={loadSearched}
-            // onEndReachedThreshold={0}
             ListFooterComponent={<FooterList load={loading} />}
           />
         </View>
