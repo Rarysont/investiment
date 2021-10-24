@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, TextInput, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -15,21 +15,21 @@ export function SearchTicket(){
   const [tickets, setTickets] = useState([])
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
-  const [search, setSearch] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [existPage, setExistPage] = useState(true);
+  const [search, setSearch] = useState("")
+  const [isFocused, setIsFocused] = useState(false)
+  const [momentumScroll, setMomentumScroll] = useState("")
+  const [nextPage, setNextPage] = useState(true)
 
   useEffect(() => {
-    setExistPage(true)
     loadSearched()
-  }, [search, existPage])
+  }, [search])
 
   function handleClearInput() {
     setSearch("")
+    setTickets([])
   }
 
-  function handleChangeSearch(value) {
-    setExistPage(true)
+  const handleChangeSearch = useCallback((value) => {
     setPage(1)
     if(value) {
       setTickets([])
@@ -40,24 +40,25 @@ export function SearchTicket(){
       setSearch("")
       setTickets([])
     }
-  }
+  }, [search])
 
   async function loadSearched() {
     try {
-      if(loading) return null;
-        setLoading(true);
+      setLoading(true);
 
-        const response = await getStocks({ pPage: page, pCount: perPage, pCodeFilter: search });
+      console.log(search, "val")
 
-        if(response?.value?.listStock.length > 0) {
-          setTickets([ ...tickets, ...response?.value?.listStock ])
-          setPage(page + 1)
-          setExistPage(response?.value?.existsNextPage)
-        }
-        setLoading(false)
+      const response = await getStocks({ pPage: page, pCount: perPage, pCodeFilter: search });
 
+      if(response?.value?.listStock.length > 0) {
+        setTickets([ ...tickets, ...response?.value?.listStock ])
+        setPage(page + 1)
+        setNextPage(response?.value?.existsNextPage)
+      }
+
+      setLoading(false)
     } catch(error) {
-      console.log(error.response)
+      console.log(error.response, "error")
     }
   }
 
@@ -100,8 +101,14 @@ export function SearchTicket(){
             keyExtractor={item => item.id}
             data={tickets}
             renderItem={({ item }) => <Searched tickets={item} />}
-            onEndReached={tickets.length > 10 ? loadSearched : null}
-            onEndReachedThreshold={0.1}
+            // onEndReached={() => {
+            //   if(!momentumScroll) {
+            //     setMomentumScroll(true)
+            //     loadSearched()
+            //   }
+            // }}
+            onMomentumScrollEnd={loadSearched}
+            // onEndReachedThreshold={0}
             ListFooterComponent={<FooterList load={loading} />}
           />
         </View>
