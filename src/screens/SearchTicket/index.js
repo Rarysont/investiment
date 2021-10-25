@@ -1,72 +1,107 @@
-import React, { useState } from 'react';
-import { Text, View, Image, ScrollView, TextInput} from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, TextInput, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from '@expo/vector-icons/MaterialIcons';
-import { acoes }  from '../../utils/acoes';
 import { Header } from '../../components/Header';
 import { Background } from '../../components/background';
 import { getStocks } from '../../service/stock';
-
+import { Searched } from '../../components/Searched';
 import styles from './styles';
+import { ActivityIndicator } from 'react-native-paper';
 
 export function SearchTicket(){
-  const [search, setSearch] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
+  const perPage = 15;
+  const [tickets, setTickets] = useState([])
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [search, setSearch] = useState("")
+  const [isFocused, setIsFocused] = useState(false)
+
+  useEffect(() => {
+    loadSearched()
+  }, [search])
 
   function handleClearInput() {
     setSearch("")
+    setTickets([])
   }
 
-  async function handleStock() {
-    const response = await getStocks();
-    console.log(response)
+  const handleChangeSearch = useCallback((value) => {
+    setPage(1)
+    if(value) {
+      setTickets([])
+      setSearch(value)
+    }
+
+    if(value.length === 0 ) {
+      setSearch("")
+      setTickets([])
+    }
+  }, [search])
+
+  async function loadSearched() {
+    try {
+      setLoading(true);
+
+      const response = await getStocks({ pPage: page, pCount: perPage, pCodeFilter: search });
+
+      if(response?.value?.listStock.length > 0) {
+        setTickets([ ...tickets, ...response?.value?.listStock ])
+        setPage(page + 1)
+        setNextPage(response?.value?.existsNextPage)
+      }
+
+      setLoading(false)
+    } catch(error) {
+      console.log(error.response, "error")
+    }
+  }
+
+  function FooterList({ load }) {
+    if(!load) return null
+
+    return (
+      <View>
+        <ActivityIndicator size={25} color="green" />
+      </View>
+    )
   }
 
   return(
     <Background>
-    <Header title="Ativos" />
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={[styles.containerSearch, isFocused && { borderWidth: 2, borderColor: '#32BD50'}]}>
-            {search === "" ? <Icon style={styles.iconSearch} name="search" size={30} color={`${isFocused ? "#32BD50": "#666460"}`} /> :
-            (
-              <>
-                <RectButton onPress={handleClearInput}>
-                  <Icon style={styles.iconClear} name="close" size={30} color={`${isFocused ? "#32BD50": "#666460"}`} />
-                </RectButton>
-              </>
-            )}
-            <TextInput
-              placeholder="Pesquise pelos ativos"
-              placeholderTextColor="#666460"
-              onChangeText={(text) => setSearch(text)}
-              onBlur={() => setIsFocused(false)}
-              onFocus={() => setIsFocused(true)}
-              value={search}
-              style={styles.textArea}
-            />
-          </View>
+      <Header title="Ativos" />
+      <View style={styles.container}>
+        <View style={[styles.containerSearch, isFocused && { borderWidth: 2, borderColor: '#32BD50'}]}>
+          {search === "" ? <Icon style={styles.iconSearch} name="search" size={30} color={`${isFocused ? "#32BD50": "#666460"}`} /> :
+          (
+            <>
+              <RectButton onPress={handleClearInput}>
+                <Icon style={styles.iconClear} name="close" size={30} color={`${isFocused ? "#32BD50": "#666460"}`} />
+              </RectButton>
+            </>
+          )}
+          <TextInput
+            placeholder="Pesquise pelos ativos"
+            placeholderTextColor="#666460"
+            onChangeText={(text) => handleChangeSearch(text)}
+            onBlur={() => setIsFocused(false)}
+            onFocus={() => setIsFocused(true)}
+            value={search}
+            style={styles.textArea}
+          />
+        </View>
 
-          <View style={styles.containerTicketSearched}>
-            {acoes.map((ac) => {
-              return (
-                <RectButton style={styles.containerTicketSearched} key={ac.id}>
-                  <View style={[styles.boxTickets, { borderBottomWidth: 2, borderColor: "#9E9EAC" }]}>
-                    <View style={styles.propertyTicket}>
-                      <Text style={styles.titleTicket}>{ac.abr}</Text>
-                      <Text style={styles.subTitleTicket}>{ac.name}</Text>
-                    </View>
-                    <View style={styles.checkBox}>
-                      {ac.active === true ? <Icon name="check-box" size={30} color="#32BD50" /> : <Icon name="check-box-outline-blank" size={30} color="#000000" />}
-                    </View>
-                  </View>
-                </RectButton>
-              )
-            })}
-          </View>
-         </View>
-      </ScrollView>
+        <View style={styles.containerTicketSearched}>
+          <FlatList
+            keyExtractor={item => item.id}
+            data={tickets}
+            renderItem={({ item }) => <Searched tickets={item} />}
+            onMomentumScrollEnd={loadSearched}
+            ListFooterComponent={<FooterList load={loading} />}
+          />
+        </View>
+      </View>
     </Background>
   );
 }
