@@ -24,24 +24,26 @@ export function SearchTicketHeader(){
       <View
         style={[styles.container, { borderBottomWidth: 2, borderColor: '#000000'}]}
       >
-        <BorderlessButton onPress={handleGoBack}>
-          <Feather
-            name="arrow-left"
-            size={24}
-            color="#000"
-          />
-        </BorderlessButton>
+        <View style={styles.box}>
+          <BorderlessButton onPress={handleGoBack} style={styles.goBack}>
+            <Feather
+              name="arrow-left"
+              size={24}
+              color="#000"
+            />
+          </BorderlessButton>
 
-        <View style={styles.containerSearch}>
-          <TextInput
-            placeholder="Pesquise pelos ativos"
-            placeholderTextColor="#666460"
-            onChangeText={(text) => handleChangeTicket(text)}
-            // onBlur={() => setIsFocused(false)}
-            // onFocus={() => setIsFocused(true)}
-            value={search}
-            style={styles.textArea}
-          />
+          <View style={styles.containerSearch}>
+            <TextInput
+              placeholder="Pesquise pelos ativos"
+              placeholderTextColor="#666460"
+              onChangeText={(text) => handleChangeTicket(text)}
+              // onBlur={() => setIsFocused(false)}
+              // onFocus={() => setIsFocused(true)}
+              value={search}
+              style={styles.textArea}
+            />
+          </View>
         </View>
       </View>
     </Background>

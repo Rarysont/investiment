@@ -20,4 +20,12 @@ export const favoriteStocks = (params, { token }) => {
       'Authorization': `Bearer ${token}`
     }
   }).then((res) => res.data)
+};
+
+export const listFavoriteStocks = ({ token }) => {
+  return api.get("Stock/GetFavorites", {
+     headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }).then((res) => res.data)
 }
