@@ -6,20 +6,28 @@ import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
 import { Background } from '../../components/background';
-import { acoes } from '../../utils/acoes';
 import { useAuth } from '../../hooks/auth';
-import { favoriteStocks, listFavoriteStocks } from '../../service/stock';
+import { ActivityIndicator } from 'react-native-paper';
+import { useFavorite } from '../../hooks/favorite';
 
 import styles from './styles';
 
-export function MyList(){
+const MyList = () => {
   const navigation = useNavigation()
   const { userInfo } = useAuth()
-  const [favoriteTicket, setFavoriteTicket] = useState([])
+  const stop = false
+  const {
+    loadFavoriteTickets,
+    favorite,
+    removeFavoriteTicket,
+    remove,
+    addFavorite,
+  } = useFavorite()
 
   useEffect(() => {
     loadFavoriteTickets()
-  }, [])
+  }, [remove, stop, addFavorite])
+
 
   function handleSearchTicket() {
     navigation.navigate('SearchTicket');
@@ -33,41 +41,29 @@ export function MyList(){
         active: false
       }
 
-      await favoriteStocks(params, { token: userInfo.token })
+      await removeFavoriteTicket(params, { token: userInfo.token })
 
     } catch(error) {
       console.log(error.response, "error")
     }
   }
 
-  async function loadFavoriteTickets() {
-    try {
-      const response = await listFavoriteStocks({ token: userInfo.token })
-
-      if(response?.value) {
-        setFavoriteTicket(response)
-      }
-    } catch(error) {
-      console.log(error.response, "error")
-    }
-  }
-
-  if(favoriteTicket?.value?.length > 0) {
+  // if(favorite.length > 0) {
     return(
-      <ScrollView style={styles.container}>
-        <Background>
+      <Background>
+        <ScrollView>
           <View style={styles.container}>
             <View style={styles.containerHeader}>
               <View>
                 <Text style={styles.titleHeader}>Meus Favoritos</Text>
-                <Text style={styles.subtitleHeader}>{`${favoriteTicket?.value.length} ativos`}</Text>
+                <Text style={styles.subtitleHeader}>{`${favorite?.length} ativos`}</Text>
               </View>
               <RectButton onPress={handleSearchTicket}>
                 <Entypo name="plus" size={30} color="#32BD50" />
               </RectButton>
             </View>
             <View style={styles.containerAllFavorites}>
-              {favoriteTicket?.value.map((ac) => {
+              {favorite.map((ac) => {
                 return (
                   <View style={styles.favoriteTickets} key={ac.idFavorite}>
                     <View style={styles.containerImage}>
@@ -97,14 +93,19 @@ export function MyList(){
               })}
             </View>
           </View>
-        </Background>
-      </ScrollView>
+        </ScrollView>
+      </Background>
     );
-  }
+  // }
 
-  return (
-    <View>
-      <Text>Opa</Text>
-    </View>
-  )
+  // return (
+  //   <Background>
+  //     <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+  //       <ActivityIndicator size={25} color="green" />
+  //     </View>
+  //   </Background>
+  // )
+
 }
+
+export default MyList;

@@ -9,6 +9,7 @@ import { useFonts } from 'expo-font';
 import { Routes } from './src/routes';
 import { Background } from './src/components/background';
 import { AuthProvider } from './src/hooks/auth';
+import { FavoriteProvider } from './src/hooks/favorite';
 
 export default function App() {
   TextInput.defaultProps = { ...(TextInput.defaultProps || {}), allowFontScaling: false };
@@ -38,7 +39,9 @@ export default function App() {
         translucent
       />
       <AuthProvider>
+        <FavoriteProvider>
         <Routes />
+        </FavoriteProvider>
       </AuthProvider>
     </Background>
   );

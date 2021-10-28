@@ -5,21 +5,19 @@ import { RectButton } from 'react-native-gesture-handler';
 import { favoriteStocks } from '../../service/stock';
 import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
+import { useFavorite } from '../../hooks/favorite';
 
 export function Searched ({ tickets }) {
   const { userInfo } = useAuth()
-  const navigation = useNavigation();
+  const { addFavoriteTicket } = useFavorite()
+  const navigation = useNavigation()
 
   async function handleSubmitFavoritTicket(value) {
     try {
-      const params = {
-        idStock: value.id,
-        idFavorite: 0,
-        active: true
-      }
-      const response = await favoriteStocks(params, { token: userInfo.token })
 
-      if(response.toLowerCase() === 'success') {
+      const res = await addFavoriteTicket(value)
+
+      if(res.toLowerCase() === 'success') {
         navigation.navigate('Minha Lista');
       }
     } catch(error) {
