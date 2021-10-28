@@ -48,55 +48,66 @@ const MyList = () => {
     }
   }
 
-  // if(favorite.length > 0) {
-    return(
-      <Background>
-        <ScrollView>
-          <View style={styles.container}>
-            <View style={styles.containerHeader}>
-              <View>
-                <Text style={styles.titleHeader}>Meus Favoritos</Text>
-                <Text style={styles.subtitleHeader}>{`${favorite?.length} ativos`}</Text>
-              </View>
-              <RectButton onPress={handleSearchTicket}>
-                <Entypo name="plus" size={30} color="#32BD50" />
-              </RectButton>
+  return(
+    <Background>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.containerHeader}>
+            <View>
+              <Text style={styles.titleHeader}>Meus Favoritos</Text>
+              <Text style={styles.subtitleHeader}>{`${favorite?.length} ativos`}</Text>
             </View>
-            <View style={styles.containerAllFavorites}>
-              {favorite.map((ac) => {
-                return (
-                  <View style={styles.favoriteTickets} key={ac.idFavorite}>
-                    <View style={styles.containerImage}>
-                      <Image
-                        source={{ uri: `data:image/png;base64,${ac.stock.companyLogo64}` }}
-                        style={styles.image}
-                        resizeMode="cover"
-                      />
+            <RectButton onPress={handleSearchTicket}>
+              <Entypo name="plus" size={30} color="#32BD50" />
+            </RectButton>
+          </View>
+          <View style={styles.containerAllFavorites}>
+            {favorite.length > 0 ? favorite.map((ac) => {
+              return (
+                <View style={styles.favoriteTickets} key={ac.idFavorite}>
+                  <View style={styles.containerImage}>
+                    <Image
+                      source={{ uri: `data:image/png;base64,${ac.stock.companyLogo64}` }}
+                      style={styles.image}
+                      resizeMode="cover"
+                    />
+                  </View>
+                  <View style={styles.containerColumnValues}>
+                    <View style={styles.rowValues}>
+                      <Text style={styles.textAbr}>{ac.stock.code}</Text>
+                      <Text style={styles.textValue}>{parseFloat(ac.stock.priceList[0].price.toFixed(2))}</Text>
                     </View>
-                    <View style={styles.containerColumnValues}>
-                      <View style={styles.rowValues}>
-                        <Text style={styles.textAbr}>{ac.stock.code}</Text>
-                        <Text style={styles.textValue}>{ac.stock.priceList[0].price}</Text>
-                      </View>
-                      <View style={styles.rowValues}>
-                        <Text style={styles.textName}>{ac.stock.companyName}</Text>
-                        <Text style={styles.textPercent}>{ac.stock.percentual}</Text>
-                      </View>
-                    </View>
-                    <View style={styles.iconsActions}>
-                      <RectButton onPress={() => handleRemoveFavoritTicket(ac)}>
-                        <Ionicons style={styles.iconClear} name="trash" size={25} color="#000" />
-                      </RectButton>
+                    <View style={styles.rowValues}>
+                      <Text style={styles.textName}>{ac.stock.companyName}</Text>
+                      <Text style={styles.textPercent}>{parseFloat(ac.stock.percentual.toFixed(2))}</Text>
                     </View>
                   </View>
-                )
-              })}
-            </View>
+                  <View style={styles.iconsActions}>
+                    <RectButton onPress={() => handleRemoveFavoritTicket(ac)}>
+                      <Ionicons style={styles.iconClear} name="trash" size={25} color="#000" />
+                    </RectButton>
+                  </View>
+                </View>
+              )
+            }) : (
+              <View style={styles.containerWithoutFavorite}>
+                <View style={styles.boxMessage}>
+                  <Text style={styles.messageWelcome}>
+                    Clique aqui para cadastrar um ativo como favorito
+                  </Text>
+                </View>
+                <View style={styles.containerButton}>
+                  <RectButton style={styles.buttonRegister} onPress={handleSearchTicket}>
+                    <Text style={styles.messageButton}>Cadastrar</Text>
+                  </RectButton>
+                </View>
+              </View>
+            )}
           </View>
-        </ScrollView>
-      </Background>
-    );
-  // }
+        </View>
+      </ScrollView>
+    </Background>
+  );
 
   // return (
   //   <Background>
