@@ -16,6 +16,8 @@ export function Profile(){
     navigation.navigate('EditProfile');
   }
 
+  const image = 'https://scontent.fcpq4-1.fna.fbcdn.net/v/t1.6435-9/181563117_935493783892960_8894682427987472468_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeHTo_s6MCLiAIIM_R8bhaTah4ztbmG5IFKHjO1uYbkgUgSt-aWXQm_R9w30Gvquavtn_hPgDIu_ZB0nh--ofgZU&_nc_ohc=rCkR9yYoFS0AX8psZ4Y&tn=11jIHNukjQlt-Au2&_nc_ht=scontent.fcpq4-1.fna&oh=c7b978c27e28fe06e42cd704acade77b&oe=61A79C8D';
+
   return(
     <Background>
       <ScrollView>
@@ -26,7 +28,7 @@ export function Profile(){
 
         <View style={styles.container}>
           <Image
-            source={{ uri: userInfo.picture }}
+            source={{ uri: image }}
             style={[styles.imageUser, {
               borderWidth: 3,
               borderRadius: 180,

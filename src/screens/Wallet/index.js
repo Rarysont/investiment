@@ -76,7 +76,7 @@ export function Wallet(){
     setInfoOpenModal(true);
   }
 
-  if(lengthApi.length > 0) {
+  // if(lengthApi.length > 0) {
     return(
       <Background>
         <ScrollView>
@@ -135,14 +135,14 @@ export function Wallet(){
         </ScrollView>
       </Background>
     );
-  }
+  // }
 
-  return (
-    <Background>
-      <View style={styles.container}>
-        <WalletStarted />
-      </View>
-    </Background>
+  // return (
+  //   <Background>
+  //     <View style={styles.container}>
+  //       <WalletStarted />
+  //     </View>
+  //   </Background>
 
-  )
+  // )
 }

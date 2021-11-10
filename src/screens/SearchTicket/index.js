@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, TextInput, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import { Header } from '../../components/Header';

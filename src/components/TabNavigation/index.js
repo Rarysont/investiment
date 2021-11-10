@@ -7,6 +7,8 @@ import { Background } from '../background';
 import MyList from '../../screens/MyList';
 import { Profile } from '../../screens/Profile';
 import { Wallet } from '../../screens/Wallet';
+import { News } from '../../screens/News';
+
 import styles from './styles.less';
 
 const Tab = createBottomTabNavigator();
@@ -87,6 +89,14 @@ export function TabsNavigation(){
         component={Wallet}
         options={{
           tabBarLabel: 'wallet'
+         }}
+      />
+
+      <Tab.Screen
+        name="Noticias"
+        component={News}
+        options={{
+          tabBarLabel: 'newspaper'
          }}
       />
 
