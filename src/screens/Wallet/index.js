@@ -14,10 +14,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { ModalInfoPercent } from '../../components/ModalInfoPercent';
 import { Background } from '../../components/background';
 import { ScrollTicketList } from '../../components/ScrollTicketList';
-
+import { WalletStarted } from '../../components/TicketListWallet/WalletStarted';
 import styles from './styles';
 
 export function Wallet(){
+  const lengthApi = []
   const [eye, setEye] = useState(true);
   const [openInfoModal, setInfoOpenModal] = useState(false);
   const screenWidth = Dimensions.get("window").width;
@@ -75,62 +76,73 @@ export function Wallet(){
     setInfoOpenModal(true);
   }
 
-  return(
-    <Background>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.containerTitleWallet}>
-            <Text style={styles.titleWallet}>Carteira</Text>
-            <View style={styles.containerIcons}>
-              <RectButton onPress={() => setEye(eye ? false : true)}>
-                <AntDesign name="eyeo" size={30} color="#32BD50" />
-              </RectButton>
-              <View style={{ marginLeft: 20 }}>
-                <Entypo name="plus" size={30} color="#32BD50" />
-              </View>
-            </View>
-          </View>
-          <ModalInfoPercent
-            visible={openInfoModal}
-            closeModal={handleCloseModalInfo}
-          />
-          <View style={styles.containerValue}>
-            <Text style={styles.totalValue}>R$ {eye ? value : asterisk}</Text>
-            <View style={styles.containerIconsValue}>
-              <Text style={[styles.percent, { color: '#32BD50' }]}>R$ {eye ? percent : asterisk}</Text>
-              <View style={{ marginLeft: 10 }}>
-                <RectButton onPress={() => handleOpenModalInfo()}>
-                  <Entypo name="info-with-circle" size={22} color="black" />
+  // if(lengthApi.length > 0) {
+    return(
+      <Background>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.containerTitleWallet}>
+              <Text style={styles.titleWallet}>Carteira</Text>
+              <View style={styles.containerIcons}>
+                <RectButton onPress={() => setEye(eye ? false : true)}>
+                  <AntDesign name="eyeo" size={30} color="#32BD50" />
                 </RectButton>
+                <View style={{ marginLeft: 20 }}>
+                  <Entypo name="plus" size={30} color="#32BD50" />
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.containerGraphic}>
-            <PieChart
-              data={data}
-              width={screenWidth}
-              height={220}
-              chartConfig={chartConfig}
-              accessor={"quantity"}
-              backgroundColor={"transparent"}
-              paddingLeft={"10"}
-              center={[10, 10]}
-              absolute={false}
+            <ModalInfoPercent
+              visible={openInfoModal}
+              closeModal={handleCloseModalInfo}
             />
-          </View>
-            <View style={styles.containerTicket}>
-              <View style={styles.containerAddTicket}>
-                <Text style={styles.titleMyTicket}>Meus Tickets</Text>
-                <Entypo name="plus" size={24} color="#32BD50" />
+            <View style={styles.containerValue}>
+              <Text style={styles.totalValue}>R$ {eye ? value : asterisk}</Text>
+              <View style={styles.containerIconsValue}>
+                <Text style={[styles.percent, { color: '#32BD50' }]}>R$ {eye ? percent : asterisk}</Text>
+                <View style={{ marginLeft: 10 }}>
+                  <RectButton onPress={() => handleOpenModalInfo()}>
+                    <Entypo name="info-with-circle" size={22} color="black" />
+                  </RectButton>
+                </View>
               </View>
-
-              <View style={styles.containerQuantityTicket}>
-                <Text style={styles.titleQuantityTicket}>7 ativos</Text>
-              </View>
-              <ScrollTicketList />
             </View>
-        </View>
-      </ScrollView>
-    </Background>
-  );
+            <View style={styles.containerGraphic}>
+              <PieChart
+                data={data}
+                width={screenWidth}
+                height={220}
+                chartConfig={chartConfig}
+                accessor={"quantity"}
+                backgroundColor={"transparent"}
+                paddingLeft={"10"}
+                center={[10, 10]}
+                absolute={false}
+              />
+            </View>
+              <View style={styles.containerTicket}>
+                <View style={styles.containerAddTicket}>
+                  <Text style={styles.titleMyTicket}>Meus Tickets</Text>
+                  <Entypo name="plus" size={24} color="#32BD50" />
+                </View>
+
+                <View style={styles.containerQuantityTicket}>
+                  <Text style={styles.titleQuantityTicket}>7 ativos</Text>
+                </View>
+                <ScrollTicketList />
+              </View>
+          </View>
+        </ScrollView>
+      </Background>
+    );
+  // }
+
+  // return (
+  //   <Background>
+  //     <View style={styles.container}>
+  //       <WalletStarted />
+  //     </View>
+  //   </Background>
+
+  // )
 }

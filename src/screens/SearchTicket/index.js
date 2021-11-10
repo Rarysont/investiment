@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, TextInput, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import { Header } from '../../components/Header';
 import { Background } from '../../components/background';
 import { getStocks } from '../../service/stock';
 import { Searched } from '../../components/Searched';
+import { useAuth } from '../../hooks/auth';
 import styles from './styles';
 import { ActivityIndicator } from 'react-native-paper';
 
 export function SearchTicket(){
   const perPage = 15;
+  const { userInfo } = useAuth()
   const [tickets, setTickets] = useState([])
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
@@ -44,17 +45,21 @@ export function SearchTicket(){
     try {
       setLoading(true);
 
-      const response = await getStocks({ pPage: page, pCount: perPage, pCodeFilter: search });
+      const response = await getStocks({
+        pPage: page,
+        pCount: perPage,
+        pCodeFilter: search,
+        token: userInfo.token,
+      });
 
       if(response?.value?.listStock.length > 0) {
         setTickets([ ...tickets, ...response?.value?.listStock ])
         setPage(page + 1)
-        setNextPage(response?.value?.existsNextPage)
       }
 
       setLoading(false)
     } catch(error) {
-      console.log(error.response, "error")
+      console.log(error, "error")
     }
   }
 
@@ -94,7 +99,7 @@ export function SearchTicket(){
 
         <View style={styles.containerTicketSearched}>
           <FlatList
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id.toString()}
             data={tickets}
             renderItem={({ item }) => <Searched tickets={item} />}
             onMomentumScrollEnd={loadSearched}

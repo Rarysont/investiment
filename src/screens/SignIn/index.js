@@ -14,7 +14,7 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import styles from './styles.less';
 
-import Login from '../../assets/2login.png';
+import Login from '../../assets/logo-bg.png';
 import { useAuth } from '../../hooks/auth';
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';

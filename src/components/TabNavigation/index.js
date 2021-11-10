@@ -4,10 +4,10 @@ import Icon from '@expo/vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Background } from '../background';
-
-import { MyList } from '../../screens/MyList';
+import MyList from '../../screens/MyList';
 import { Profile } from '../../screens/Profile';
 import { Wallet } from '../../screens/Wallet';
+import { News } from '../../screens/News';
 
 import styles from './styles.less';
 
@@ -89,6 +89,14 @@ export function TabsNavigation(){
         component={Wallet}
         options={{
           tabBarLabel: 'wallet'
+         }}
+      />
+
+      <Tab.Screen
+        name="Noticias"
+        component={News}
+        options={{
+          tabBarLabel: 'newspaper'
          }}
       />
 
