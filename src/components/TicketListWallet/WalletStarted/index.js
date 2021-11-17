@@ -7,8 +7,8 @@ import styles from './styles.less';
 export function WalletStarted() {
   const navigation = useNavigation();
 
-  function handleEditProfile() {
-    navigation.navigate('SearchTicketHeader');
+  function handleSearchTicket() {
+    navigation.navigate('SearchTicket', { isWallet: true });
   }
 
   return(
@@ -19,7 +19,7 @@ export function WalletStarted() {
         </Text>
       </View>
       <View style={styles.containerButton}>
-        <RectButton style={styles.buttonRegister} onPress={handleEditProfile}>
+        <RectButton style={styles.buttonRegister} onPress={handleSearchTicket}>
           <Text style={styles.messageButton}>Cadastrar</Text>
         </RectButton>
       </View>

@@ -7,21 +7,23 @@ import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
 import { useFavorite } from '../../hooks/favorite';
 
-export function Searched ({ tickets }) {
-  const { userInfo } = useAuth()
+export function Searched ({ tickets, isWallet }) {
   const { addFavoriteTicket } = useFavorite()
   const navigation = useNavigation()
 
   async function handleSubmitFavoritTicket(value) {
-    try {
+    if(!isWallet) {
+      try {
+        const res = await addFavoriteTicket(value)
 
-      const res = await addFavoriteTicket(value)
-
-      if(res.toLowerCase() === 'success') {
-        navigation.navigate('Minha Lista');
+        if(res.toLowerCase() === 'success') {
+          navigation.navigate('Minha Lista');
+        }
+      } catch(error) {
+        console.log(error.response, "error")
       }
-    } catch(error) {
-      console.log(error.response, "error")
+    } else {
+      navigation.navigate('SearchTicketHeader', { id: tickets.id, img: tickets.companyLogo64, companyName: tickets.companyName });
     }
   }
 

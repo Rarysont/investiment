@@ -6,11 +6,13 @@ import { Header } from '../../components/Header';
 import { Background } from '../../components/background';
 import { getStocks } from '../../service/stock';
 import { Searched } from '../../components/Searched';
+import { SearchTicketHeader } from './SearchTicketHeader';
 import { useAuth } from '../../hooks/auth';
 import styles from './styles';
 import { ActivityIndicator } from 'react-native-paper';
 
-export function SearchTicket(){
+export function SearchTicket({ route }){
+  const { isWallet } = route?.params;
   const perPage = 15;
   const { userInfo } = useAuth()
   const [tickets, setTickets] = useState([])
@@ -59,7 +61,7 @@ export function SearchTicket(){
 
       setLoading(false)
     } catch(error) {
-      console.log(error, "error")
+      console.log(error.response, "error")
     }
   }
 
@@ -101,7 +103,7 @@ export function SearchTicket(){
           <FlatList
             keyExtractor={(item) => item.id.toString()}
             data={tickets}
-            renderItem={({ item }) => <Searched tickets={item} />}
+            renderItem={({ item }) => <Searched tickets={item} isWallet={isWallet} />}
             onMomentumScrollEnd={loadSearched}
             ListFooterComponent={<FooterList load={loading} />}
           />

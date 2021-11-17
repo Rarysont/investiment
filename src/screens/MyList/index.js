@@ -30,7 +30,7 @@ const MyList = () => {
 
 
   function handleSearchTicket() {
-    navigation.navigate('SearchTicket');
+    navigation.navigate('SearchTicket', { isWallet: false });
   }
 
   async function handleRemoveFavoritTicket(ac) {

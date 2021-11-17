@@ -7,6 +7,7 @@ export const getStocks = ({ pPage, pCount, pCodeFilter, token }) => {
     pCodeFilter,
     token,
   }
+
   return api.get("Stock/Paginator", {
     params, headers: {
       'Authorization': `Bearer ${token}`
