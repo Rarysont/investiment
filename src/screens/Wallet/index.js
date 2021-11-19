@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, Dimensions } from 'react-native';
 import {
   LineChart,
@@ -15,47 +15,27 @@ import { ModalInfoPercent } from '../../components/ModalInfoPercent';
 import { Background } from '../../components/background';
 import { ScrollTicketList } from '../../components/ScrollTicketList';
 import { WalletStarted } from '../../components/TicketListWallet/WalletStarted';
+import { useNavigation } from '@react-navigation/native';
+import { useWallet } from '../../hooks/wallet';
 import styles from './styles';
 
 export function Wallet(){
   const lengthApi = []
+  const navigation = useNavigation();
   const [eye, setEye] = useState(true);
+  const { getTickets, allTickets } = useWallet();
+  const [auxiliar, setAux] = useState([]);
   const [openInfoModal, setInfoOpenModal] = useState(false);
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;
-  const value = '21.447,80';
+  const value = parseFloat(allTickets?.totalWalletValue).toFixed(2);
   const asterisk = '*******';
-  const percent = '37,40 (0,18%)';
-  const data = [
-    {
-      name: "MGLU3",
-      quantity: 30,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "VALE3",
-      quantity: 10,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "BBDC4",
-      quantity: 2,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "VVAR3",
-      quantity: 7,
-      color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-  ];
+  const percent = parseFloat(allTickets?.percentWallet).toFixed(2);
+
+  // color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
+
+  // legendFontColor: "#7F7F7F",
+  //     legendFontSize: 15
 
   const chartConfig = {
     backgroundGradientFrom: "#1E2923",
@@ -68,6 +48,30 @@ export function Wallet(){
     useShadowColorFromDataset: false
   };
 
+  useEffect(() => {
+    getTickets();
+  }, []);
+
+  useEffect(() => {
+    renderColors();
+  }, [allTickets]);
+
+  function renderColors() {
+    const aux = []
+    if(allTickets?.listInfoTicket?.length > 0) {
+      allTickets?.listInfoTicket?.forEach((item) => {
+        const obj = {
+          color: `${'#' + ((Math.random() * 0xfffff * 1000000).toString(16)).slice(0,6)}`,
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15,
+        }
+        const varu = Object.assign(item, obj)
+        aux.push(varu);
+      })
+    }
+    setAux(aux)
+  }
+
   function handleCloseModalInfo(){
     setInfoOpenModal(false);
   }
@@ -76,7 +80,11 @@ export function Wallet(){
     setInfoOpenModal(true);
   }
 
-  if(lengthApi.length > 0) {
+  function handleSearchTicket() {
+    navigation.navigate('SearchTicket', { isWallet: true });
+  }
+
+  if(!lengthApi.length) {
     return(
       <Background>
         <ScrollView>
@@ -88,7 +96,9 @@ export function Wallet(){
                   <AntDesign name="eyeo" size={30} color="#32BD50" />
                 </RectButton>
                 <View style={{ marginLeft: 20 }}>
+                <RectButton onPress={handleSearchTicket}>
                   <Entypo name="plus" size={30} color="#32BD50" />
+                </RectButton>
                 </View>
               </View>
             </View>
@@ -99,7 +109,7 @@ export function Wallet(){
             <View style={styles.containerValue}>
               <Text style={styles.totalValue}>R$ {eye ? value : asterisk}</Text>
               <View style={styles.containerIconsValue}>
-                <Text style={[styles.percent, { color: '#32BD50' }]}>R$ {eye ? percent : asterisk}</Text>
+                <Text style={[styles.percent, { color: '#32BD50' }]}>{eye ? percent : asterisk}</Text>
                 <View style={{ marginLeft: 10 }}>
                   <RectButton onPress={() => handleOpenModalInfo()}>
                     <Entypo name="info-with-circle" size={22} color="black" />
@@ -108,26 +118,25 @@ export function Wallet(){
               </View>
             </View>
             <View style={styles.containerGraphic}>
-              <PieChart
-                data={data}
+              {auxiliar && <PieChart
+                data={auxiliar}
                 width={screenWidth}
                 height={220}
                 chartConfig={chartConfig}
-                accessor={"quantity"}
+                accessor={"amount"}
                 backgroundColor={"transparent"}
                 paddingLeft={"10"}
                 center={[10, 10]}
                 absolute={false}
-              />
+                name={"code"}
+              />}
             </View>
               <View style={styles.containerTicket}>
-                <View style={styles.containerAddTicket}>
-                  <Text style={styles.titleMyTicket}>Meus Tickets</Text>
-                  <Entypo name="plus" size={24} color="#32BD50" />
-                </View>
-
-                <View style={styles.containerQuantityTicket}>
-                  <Text style={styles.titleQuantityTicket}>7 ativos</Text>
+                <View style={styles.containerDescription}>
+                  <Entypo name="list" size={22} color="black" />
+                  <Text style={styles.descriptionQtd}>Qtde</Text>
+                  <Text style={styles.descriptionPrice}>Preço Atual/Médio</Text>
+                  <Text style={styles.descriptionTotal}>Total</Text>
                 </View>
                 <ScrollTicketList />
               </View>

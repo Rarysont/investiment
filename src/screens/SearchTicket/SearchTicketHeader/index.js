@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import moment from 'moment';
 import { Text, Image, View, TextInput } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import { RectButton } from 'react-native-gesture-handler';
@@ -6,8 +7,8 @@ import { Header } from '../../../components/Header';
 import styles from './styles.less';
 import { useAuth } from '../../../hooks/auth';
 import { Background } from '../../../components/background';
-import { maskDate } from '../../../utils/masks';
-import { addOrRemoveWallet } from '../../../service/wallet';
+import { maskDate, unmaskDate } from '../../../utils/masks';
+import { useWallet } from '../../../hooks/wallet';
 
 export function SearchTicketHeader({ route }){
   const { id, img, companyName } = route.params;
@@ -15,6 +16,7 @@ export function SearchTicketHeader({ route }){
   const [selected, setSelected] = useState();
   const [isFocused, setIsFocused] = useState(false)
   const { userInfo } = useAuth();
+  const { addWalletOrRemoveWallet } = useWallet();
 
   function handleOperationSelected(value) {
     setSelected(value)
@@ -22,19 +24,18 @@ export function SearchTicketHeader({ route }){
 
   async function onSubmit(data) {
     try {
-      const date = data.date.split("/").join("-").split("-");
-      const finalDate = `${date[2]}-${date[1]}-${date[0]}`;
+      const date = moment(data.date).format("YYYY-MM-DD");
 
       const params = {
         idTicket: id,
         amount: data.qtd,
         purchase: selected === "Compra" ? true : false,
-        operationDate: finalDate,
+        operationDate: date,
         price: data.price,
         userToken: userInfo.token,
       }
 
-      await addOrRemoveWallet(params);
+      await addWalletOrRemoveWallet(params);
     } catch(error) {
       console.log(error.response);
     }

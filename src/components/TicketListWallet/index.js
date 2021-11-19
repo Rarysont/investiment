@@ -27,6 +27,31 @@ export function TicketListWallet({
   return(
       <RectButton {...rest} onPress={handleEditProfile}>
         <View style={[styles.container, {
+          borderBottomWidth: 1,
+        }]}>
+          <View style={styles.containerWallet}>
+            <View style={styles.containerData}>
+              <Image
+                source={{ uri: image }}
+                style={styles.image}
+                resizeMode="cover"
+              />
+              <Text style={styles.nameTicket}>{abr}</Text>
+            </View>
+            <View style={styles.containerData}>
+              <Text style={styles.nameTicket}>{quantity}</Text>
+            </View>
+            <View style={styles.containerData}>
+              <Text style={styles.nameTicket}>{price}</Text>
+              <Text style={styles.nameTicket}>70,00</Text>
+            </View>
+            <View style={styles.containerData}>
+              <Text style={styles.nameTicket}>2.559,90</Text>
+              <Text style={styles.nameTicket}>-51.72%</Text>
+            </View>
+          </View>
+        </View>
+        {/* <View style={[styles.container, {
           borderWidth: 3 ,
           borderColor: '#ccc'
         }]}>
@@ -37,18 +62,14 @@ export function TicketListWallet({
                 style={styles.image}
                 resizeMode="cover"
               />
-            </View>
-
-            <View style={styles.containerNameAction}>
-              <Text style={styles.nameTicket}>
-                { title }
-              </Text>
               <Text style={[styles.nameTicket, { color: '#32BD50'}]}>
                 { abr }
               </Text>
             </View>
 
-            <View style={styles.bar}></View>
+            <View style={styles.containerNameAction}>
+              <Text style={styles.nameTicket}>30</Text>
+            </View>
 
             <View style={styles.containerPrice}>
               <Text style={styles.price}>
@@ -59,8 +80,16 @@ export function TicketListWallet({
               </Text>
             </View>
 
+            <View style={styles.containerPrice}>
+              <Text style={styles.price}>
+                { price }
+              </Text>
+              <Text style={[styles.percent, { color: '#32BD50'}]}>
+                { percent }
+              </Text>
+            </View>
           </View>
-        </View>
+        </View> */}
       </RectButton>
   );
 }

@@ -36,7 +36,6 @@ function FavoriteProvider({ children }) {
       setRemove("")
       const res = await favoriteStocks(params, { token: userInfo.token })
 
-      console.log(res, "RES")
       if(res.toLowerCase() === 'success') {
         setRemove(params?.idFavorite)
       }
@@ -54,7 +53,6 @@ function FavoriteProvider({ children }) {
       }
       const response = await favoriteStocks(params, { token: userInfo.token })
 
-      console.log(response, "RESPONSE")
       if(response.toLowerCase() === 'success') {
         setAddFavorite(params.idStock)
       }

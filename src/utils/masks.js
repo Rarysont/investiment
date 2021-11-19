@@ -19,7 +19,7 @@ export const unmaskTEL = (value) => {
 
 export const unmaskDate = (value) => {
   if (!value) return "";
-  return value.replace(/\//gu, "");
+  return value.replace(/\//gu, " ");
 };
 
 export const maskDate = (value) => {

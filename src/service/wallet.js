@@ -13,4 +13,13 @@ export const addOrRemoveWallet = (data) => {
       'Authorization': `Bearer ${data.userToken}`
     }
   }).then((res) => res.data)
+
+};
+
+export const getAllTickets = ({ token }) => {
+  return api.get("Stock/GetInfoWallet", { headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }).then((res) => res.data)
+
 };

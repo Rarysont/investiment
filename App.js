@@ -10,6 +10,7 @@ import { Routes } from './src/routes';
 import { Background } from './src/components/background';
 import { AuthProvider } from './src/hooks/auth';
 import { FavoriteProvider } from './src/hooks/favorite';
+import { WalletProvider } from './src/hooks/wallet';
 
 export default function App() {
   TextInput.defaultProps = { ...(TextInput.defaultProps || {}), allowFontScaling: false };
@@ -40,7 +41,9 @@ export default function App() {
       />
       <AuthProvider>
         <FavoriteProvider>
-        <Routes />
+          <WalletProvider>
+            <Routes />
+          </WalletProvider>
         </FavoriteProvider>
       </AuthProvider>
     </Background>
