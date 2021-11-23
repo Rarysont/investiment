@@ -34,7 +34,7 @@ const HeaderGraph = ({ translation, index }) => {
       [0, SIZE],
       [data.value.maxPrice, data.value.minPrice]
     );
-    return `$ ${round(p, 2).toLocaleString("pt-BR", { currency: "BRL" })}`;
+    return `R$ ${round(p, 2).toLocaleString("pt-BR", { currency: "BRL" })}`;
   });
   const percentChange = useDerivedValue(
     () => `${round(data?.value?.percentChange, 3)}%`

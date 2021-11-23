@@ -19,7 +19,7 @@ function WalletProvider({ children }) {
     try {
 
       const response = await addOrRemoveWallet(value);
-
+      console.log(response, "RES")
       if(response.toLowerCase() === 'success') {
         setAddWallet(value.idTicket)
       }

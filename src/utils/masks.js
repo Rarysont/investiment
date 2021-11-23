@@ -53,7 +53,7 @@ export const maskBRL = (value) => {
 
   const newFormated = formated.split(",").join(".");
 
-  return `R$ ${`${newFormated.substr(
+  return `${`${newFormated.substr(
     0,
     newFormated.lastIndexOf(".")
   )},${newFormated.substr(newFormated.lastIndexOf(".") + 1)}`}`;

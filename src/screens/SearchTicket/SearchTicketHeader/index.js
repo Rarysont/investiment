@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { Text, Image, View, TextInput } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { Header } from '../../../components/Header';
 import styles from './styles.less';
 import { useAuth } from '../../../hooks/auth';
 import { Background } from '../../../components/background';
-import { maskDate, unmaskDate } from '../../../utils/masks';
+import { useNavigation } from '@react-navigation/native';
+import { maskDate } from '../../../utils/masks';
 import { useWallet } from '../../../hooks/wallet';
 
 export function SearchTicketHeader({ route }){
   const { id, img, companyName } = route.params;
+  const navigation = useNavigation();
   const { control, handleSubmit, formState: { errors } } = useForm();
   const [selected, setSelected] = useState();
   const [isFocused, setIsFocused] = useState(false)
@@ -24,8 +26,7 @@ export function SearchTicketHeader({ route }){
 
   async function onSubmit(data) {
     try {
-      const date = moment(data.date).format("YYYY-MM-DD");
-
+      const date = moment(new Date(data.date)).format("YYYY-MM-DD");
       const params = {
         idTicket: id,
         amount: data.qtd,
@@ -35,7 +36,11 @@ export function SearchTicketHeader({ route }){
         userToken: userInfo.token,
       }
 
-      await addWalletOrRemoveWallet(params);
+      const res = await addWalletOrRemoveWallet(params);
+      if(res.toLowerCase() === "success") {
+        navigation.navigate('Carteira');
+      }
+
     } catch(error) {
       console.log(error.response);
     }

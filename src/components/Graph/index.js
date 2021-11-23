@@ -1,25 +1,9 @@
 import React from "react";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
-import Svg, { Path } from "react-native-svg";
-import Animated, {
-  useAnimatedProps,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { mixPath, useVector } from "react-native-redash";
+import {
+  LineChart,
+} from "react-native-chart-kit";
 
-import { graphs, SIZE } from "../../utils/Model";
-import { Header } from "../Header";
-import HeaderGraph from "./HeaderGraph";
-import Cursor from "../CursorGraph";
-
-const { width } = Dimensions.get("window");
-const AnimatedPath = Animated.createAnimatedComponent(Path);
-
-const SELECTION_WIDTH = width - 32;
-const BUTTON_WIDTH = (width - 20) / graphs.length;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -51,59 +35,50 @@ const styles = StyleSheet.create({
   },
 });
 
-const Graph = ({ route }) => {
-  const translation = useVector();
-  const { coupon } = route.params;
-  const transition = useSharedValue(0);
-  const previous = useSharedValue(0);
-  const current = useSharedValue(0);
-  const animatedProps = useAnimatedProps(() => {
-    const previousPath = graphs[previous.value].data.path;
-    const currentPath = graphs[current.value].data.path;
-    return {
-      d: mixPath(transition.value, previousPath, currentPath),
-    };
-  });
-  const style = useAnimatedStyle(() => ({
-    transform: [{ translateX: withTiming(BUTTON_WIDTH * current.value) }],
-  }));
+const Graph = () => {
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 130, 43],
+        color: (opacity = 1) => `rgba(16, 245, 27, ${opacity})`,
+        strokeWidth: 2
+      }
+    ],
+    legend: ["Rainy Days"]
+  };
   return (
     <View style={styles.container}>
       <Header title="Gráfico" />
-      <HeaderGraph translation={translation} index={current} />
-      <View style={styles.containerSvg}>
-        <Svg width={SIZE} height={SIZE}>
-          <AnimatedPath
-            animatedProps={animatedProps}
-            fill="transparent"
-            stroke="black"
-            strokeWidth={3}
-          />
-        </Svg>
-        <Cursor translation={translation} index={current} />
-      </View>
-      <View style={styles.selection}>
-        <View style={StyleSheet.absoluteFill}>
-          <Animated.View style={[styles.backgroundSelection, style]} />
-        </View>
-        {graphs.map((graph, index) => {
-          return (
-            <TouchableWithoutFeedback
-              key={graph.label}
-              onPress={() => {
-                previous.value = current.value;
-                transition.value = 0;
-                current.value = index;
-                transition.value = withTiming(1);
-              }}
-            >
-              <Animated.View style={[styles.labelContainer]}>
-                <Text style={styles.label}>{graph.label}</Text>
-              </Animated.View>
-            </TouchableWithoutFeedback>
-          );
-        })}
-      </View>
+      <LineChart
+        data={data}
+        width={Dimensions.get("window").width}
+        height={220}
+        yAxisLabel="$"
+        yAxisSuffix="k"
+        yAxisInterval={1}
+        chartConfig={{
+          backgroundColor: "#CCC",
+          backgroundGradientFrom: "#CCC",
+          backgroundGradientTo: "#CCC",
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16
+          },
+          propsForDots: {
+            r: "6",
+            strokeWidth: "2",
+            stroke: "#0337D9"
+          }
+        }}
+        bezier
+        style={{
+          marginVertical: 8,
+          borderRadius: 16
+        }}
+      />
     </View>
   );
 };

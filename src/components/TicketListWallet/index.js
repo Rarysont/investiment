@@ -1,8 +1,8 @@
 import React from 'react';
 import { RectButton } from 'react-native-gesture-handler';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import { maskBRL } from '../../utils/masks';
 import styles from './styles.less';
 
 export function TicketListWallet({
@@ -12,12 +12,10 @@ export function TicketListWallet({
   abr,
   percent,
   image,
+  lastPrice,
+  total,
   ...rest
 }){
-  // const uri = 'https://seeklogo.com/images/B/bradesco-com-degrade-logo-D276931A0A-seeklogo.com.png';
-  // const uri = 'https://logodownload.org/wp-content/uploads/2019/09/magalu-logo-0.png';
-  const uri = 'https://i.pinimg.com/originals/9b/73/bd/9b73bd6461829fa63c4c366ffd2f19cf.png';
-
   const navigation = useNavigation();
 
   function handleEditProfile() {
@@ -32,64 +30,27 @@ export function TicketListWallet({
           <View style={styles.containerWallet}>
             <View style={styles.containerData}>
               <Image
-                source={{ uri: image }}
+                source={{ uri: `data:image/png;base64,${image}` }}
                 style={styles.image}
                 resizeMode="cover"
               />
-              <Text style={styles.nameTicket}>{abr}</Text>
+              <Text style={styles.abr}>{abr}</Text>
             </View>
             <View style={styles.containerData}>
-              <Text style={styles.nameTicket}>{quantity}</Text>
+              <Text style={styles.quantity}>{quantity}</Text>
             </View>
             <View style={styles.containerData}>
-              <Text style={styles.nameTicket}>{price}</Text>
-              <Text style={styles.nameTicket}>70,00</Text>
+              <Text style={styles.price}>{maskBRL(price)}</Text>
+              <Text style={styles.lastPrice}>{maskBRL(lastPrice)}</Text>
             </View>
             <View style={styles.containerData}>
-              <Text style={styles.nameTicket}>2.559,90</Text>
-              <Text style={styles.nameTicket}>-51.72%</Text>
+              <Text style={styles.nameTicket}>{maskBRL(total)}</Text>
+              <Text style={[styles.nameTicket, {
+                color: `${String(percent)?.includes('-') ? "#E51C44" : "#32BD50"}`
+              }]}>{String(percent)?.includes('-') ? `${maskBRL(percent)}` : `+${maskBRL(percent)}`}</Text>
             </View>
           </View>
         </View>
-        {/* <View style={[styles.container, {
-          borderWidth: 3 ,
-          borderColor: '#ccc'
-        }]}>
-          <View style={styles.containerData}>
-            <View style={styles.containerImage}>
-              <Image
-                source={{ uri: image }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-              <Text style={[styles.nameTicket, { color: '#32BD50'}]}>
-                { abr }
-              </Text>
-            </View>
-
-            <View style={styles.containerNameAction}>
-              <Text style={styles.nameTicket}>30</Text>
-            </View>
-
-            <View style={styles.containerPrice}>
-              <Text style={styles.price}>
-                { price }
-              </Text>
-              <Text style={[styles.percent, { color: '#32BD50'}]}>
-                { percent }%
-              </Text>
-            </View>
-
-            <View style={styles.containerPrice}>
-              <Text style={styles.price}>
-                { price }
-              </Text>
-              <Text style={[styles.percent, { color: '#32BD50'}]}>
-                { percent }
-              </Text>
-            </View>
-          </View>
-        </View> */}
       </RectButton>
   );
 }
