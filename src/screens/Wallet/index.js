@@ -29,8 +29,8 @@ export function Wallet(){
   const value = parseFloat(allTickets?.totalTicketsValue).toFixed(2);
   const asterisk = '*******';
   const percent = String(percent)?.includes('-') ?
-    parseFloat(allTickets?.percentWallet).toFixed(2) :
-    `+${parseFloat(allTickets?.percentWallet).toFixed(2)}`;
+    `${parseFloat(allTickets?.percentWallet).toFixed(2)}` :
+    `${parseFloat(allTickets?.percentWallet).toFixed(2)}`;
 
   const chartConfig = {
     backgroundGradientFrom: "#1E2923",
@@ -79,7 +79,7 @@ export function Wallet(){
     navigation.navigate('SearchTicket', { isWallet: true });
   }
 
-  if(auxiliar.length) {
+  if(auxiliar?.length) {
     return(
       <Background>
         <ScrollView>
@@ -132,7 +132,7 @@ export function Wallet(){
                 <View style={styles.containerDescription}>
                   <Entypo name="list" size={22} color="black" />
                   <Text style={styles.descriptionQtd}>Qtde</Text>
-                  <Text style={styles.descriptionPrice}>Preço Atual/Médio</Text>
+                  <Text style={styles.descriptionPrice}>Preço Médio/Atual</Text>
                   <Text style={styles.descriptionTotal}>Total</Text>
                 </View>
                 <ScrollTicketList />
@@ -143,7 +143,7 @@ export function Wallet(){
     );
   }
 
-  if(auxiliar?.length === 0 && allTickets?.listInfoTicket?.length === 0) {
+  if(auxiliar?.length === 0 && allTickets?.length === 0) {
     return (
       <Background>
         <View style={styles.container}>

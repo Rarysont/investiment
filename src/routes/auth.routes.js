@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import { TabsNavigation } from '../components/TabNavigation';
 import { EditProfile } from '../screens/EditProfile';
 import { SearchTicket } from '../screens/SearchTicket';

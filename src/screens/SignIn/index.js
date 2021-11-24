@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -11,6 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from "react-hook-form";
 import { RectButton } from 'react-native-gesture-handler';
+import { Entypo } from '@expo/vector-icons';
 
 import styles from './styles.less';
 
@@ -22,6 +23,7 @@ import { ButtonSocial } from '../../components/ButtonSocial';
 
 export function SignIn() {
   const navigation = useNavigation();
+  const [eye, setEye] = useState(true);
   const { signInGoogle, signInFacebook, login } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm();
 
@@ -94,28 +96,34 @@ export function SignIn() {
 
           {errors.userName && <Text style={styles.errors}>{errors.userName.message}</Text>}
 
-          <Controller
-            name="Password"
-            control={control}
-            rules={{
-              required: {
-                message:  'Campo obrigatório',
-                value: true,
-              }
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="Password"
-                placeholderTextColor="#000"
-                secureTextEntry={true}
-              />
-            )}
-            name="password"
-          />
+          <View style={styles.containerEyes}>
+            <Controller
+              name="Password"
+              control={control}
+              rules={{
+                required: {
+                  message:  'Campo obrigatório',
+                  value: true,
+                }
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.inputPassword}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="Password"
+                  placeholderTextColor="#000"
+                  secureTextEntry={eye}
+                />
+              )}
+              name="password"
+            />
+
+            <RectButton onPress={() => setEye(eye ? false : true)}>
+              <Entypo name={eye ? "eye-with-line" : "eye"} size={25} color="#000" />
+            </RectButton>
+          </View>
 
           {errors.password && <Text style={styles.errors}>{errors.password.message}</Text>}
 

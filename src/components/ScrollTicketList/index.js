@@ -12,6 +12,7 @@ export function ScrollTicketList() {
       allTickets?.listInfoTicket?.map(ac => (
         <TicketListWallet
           key={ac.idTicket}
+          id={ac.idTicket}
           image={ac.companyLogo}
           title={ac.companyName}
           abr={ac.name}
@@ -19,7 +20,7 @@ export function ScrollTicketList() {
           lastPrice={ac.lastPrice}
           quantity={ac.amount}
           percent={ac.percent}
-          total={ac.totalStock}
+          total={ac.totalVariation}
         />
       ))
     )

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Text, Image, View, TextInput } from 'react-native';
+import { Text, Image, View, TextInput, Alert } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { RectButton } from 'react-native-gesture-handler';
 import { Header } from '../../../components/Header';
 import styles from './styles.less';
 import { useAuth } from '../../../hooks/auth';
@@ -16,7 +16,9 @@ export function SearchTicketHeader({ route }){
   const navigation = useNavigation();
   const { control, handleSubmit, formState: { errors } } = useForm();
   const [selected, setSelected] = useState();
-  const [isFocused, setIsFocused] = useState(false)
+  const [isFocusedDate, setIsFocusedDate] = useState(false)
+  const [isFocusedQtd, setIsFocusedQtd] = useState(false)
+  const [isFocusedPrice, setIsFocusedPrice] = useState(false)
   const { userInfo } = useAuth();
   const { addWalletOrRemoveWallet } = useWallet();
 
@@ -26,13 +28,15 @@ export function SearchTicketHeader({ route }){
 
   async function onSubmit(data) {
     try {
-      const date = moment(new Date(data.date)).format("YYYY-MM-DD");
+      console.log(data.date, "DATE")
+      console.log(moment(new Date(data.date)).format("YYYY-MM-DD"), "DATE2")
+      const date = moment(new Date(data.date)).format("YYYY-DD-MM");
       const params = {
         idTicket: id,
         amount: data.qtd,
         purchase: selected === "Compra" ? true : false,
         operationDate: date,
-        price: data.price,
+        price: data.price.split(",").join("."),
         userToken: userInfo.token,
       }
 
@@ -40,9 +44,12 @@ export function SearchTicketHeader({ route }){
       if(res.toLowerCase() === "success") {
         navigation.navigate('Carteira');
       }
-
     } catch(error) {
-      console.log(error.response);
+      Alert.alert(error.response.data, "Tente novamente", [
+        {
+          text: "Ok"
+        }
+      ])
     }
   }
 
@@ -95,16 +102,16 @@ export function SearchTicketHeader({ route }){
                 <TextInput
                   style={[styles.input,
                     {
-                      color: `${isFocused ? '#32BD50' : '#B9B9C0'}`
+                      color: `${isFocusedDate ? '#32BD50' : '#B9B9C0'}`
                     }]}
-                  onBlur={() => setIsFocused(false)}
-                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocusedDate(false)}
+                  onFocus={() => setIsFocusedDate(true)}
                   onChangeText={onChange}
                   value={maskDate(value)}
                   keyboardType = 'numeric'
                   placeholder="DD/MM/YYYY"
                   maxLength={10}
-                  placeholderTextColor={`${isFocused ? '#32BD50' : '#B9B9C0'}`}
+                  placeholderTextColor={`${isFocusedDate ? '#32BD50' : '#B9B9C0'}`}
                 />
               )}
               name="date"
@@ -125,15 +132,15 @@ export function SearchTicketHeader({ route }){
                 <TextInput
                   style={[styles.input,
                     {
-                      color: `${isFocused ? '#32BD50' : '#B9B9C0'}`
+                      color: `${isFocusedQtd ? '#32BD50' : '#B9B9C0'}`
                     }]}
-                  onBlur={() => setIsFocused(false)}
-                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocusedQtd(false)}
+                  onFocus={() => setIsFocusedQtd(true)}
                   onChangeText={onChange}
                   value={value}
                   keyboardType = 'numeric'
                   placeholder="0"
-                  placeholderTextColor={`${isFocused ? '#32BD50' : '#B9B9C0'}`}
+                  placeholderTextColor={`${isFocusedQtd ? '#32BD50' : '#B9B9C0'}`}
                 />
               )}
               name="qtd"
@@ -155,15 +162,15 @@ export function SearchTicketHeader({ route }){
                 <TextInput
                   style={[styles.input,
                     {
-                      color: `${isFocused ? '#32BD50' : '#B9B9C0'}`
+                      color: `${isFocusedPrice ? '#32BD50' : '#B9B9C0'}`
                     }]}
-                  onBlur={() => setIsFocused(false)}
-                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocusedPrice(false)}
+                  onFocus={() => setIsFocusedPrice(true)}
                   onChangeText={onChange}
                   value={value}
                   keyboardType = 'numeric'
-                  placeholder="R$ 00,00"
-                  placeholderTextColor={`${isFocused ? '#32BD50' : '#B9B9C0'}`}
+                  placeholder="00,00"
+                  placeholderTextColor={`${isFocusedPrice ? '#32BD50' : '#B9B9C0'}`}
                 />
               )}
               name="price"

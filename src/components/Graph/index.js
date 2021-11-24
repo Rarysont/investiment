@@ -1,85 +1,128 @@
-import React from "react";
-import { Text, View, StyleSheet, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, Dimensions } from "react-native";
 import {
   LineChart,
 } from "react-native-chart-kit";
+import { RectButton } from 'react-native-gesture-handler';
+import { Header } from "../Header";
+import { Background } from "../background";
+import styles from './styles.less';
+import { getDataGraphic } from "../../service/graphic";
+import { useAuth } from "../../hooks/auth";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  containerSvg: {
-    marginTop: 20,
-  },
-  backgroundSelection: {
-    backgroundColor: "#1CC0A0",
-    ...StyleSheet.absoluteFillObject,
-    width: BUTTON_WIDTH,
-    borderRadius: 8,
-  },
-  selection: {
-    flexDirection: "row",
-    width: SELECTION_WIDTH,
-    alignSelf: "center",
-  },
-  labelContainer: {
-    padding: 10,
-    width: BUTTON_WIDTH,
-  },
-  label: {
-    fontSize: 14,
-    color: "black",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
+const Graph = ({ route }) => {
+  const { idTicket } = route?.params;
+  const { userInfo } = useAuth();
+  const [dataResponse, setDataResponse] = useState([]);
+  const [filterGraph, setFilterGraph] = useState("Year")
 
-const Graph = () => {
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 130, 43],
-        color: (opacity = 1) => `rgba(16, 245, 27, ${opacity})`,
-        strokeWidth: 2
+  const [response, setResponse] = useState([]);
+
+  useEffect(() => {
+    getValuesGraphic()
+  }, [idTicket, filterGraph])
+
+  useEffect(() => {
+    renderDataWithColor()
+  }, [response])
+
+  async function getValuesGraphic() {
+    try {
+      const params = {
+        stockId: idTicket,
+        typeProgression: filterGraph,
       }
-    ],
-    legend: ["Rainy Days"]
-  };
-  return (
-    <View style={styles.container}>
-      <Header title="Gráfico" />
-      <LineChart
-        data={data}
-        width={Dimensions.get("window").width}
-        height={220}
-        yAxisLabel="$"
-        yAxisSuffix="k"
-        yAxisInterval={1}
-        chartConfig={{
-          backgroundColor: "#CCC",
-          backgroundGradientFrom: "#CCC",
-          backgroundGradientTo: "#CCC",
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16
-          },
-          propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: "#0337D9"
+      const data = await getDataGraphic(params, userInfo.token);
+      if(data?.value) setResponse(data?.value)
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  function renderDataWithColor() {
+    const aux1 = [];
+    const aux2 = [];
+    if(response?.length > 0) {
+      response?.forEach((item, index) => {
+        if(index === 0 || index === response?.length - 1 || index === ((response.length / 2) - 1)) {
+          aux1.push(item.description);
+        } else {
+          aux1.push("")
+        }
+        aux2.push(parseFloat(item.price).toFixed(2));
+      })
+
+      const obj = {
+        labels: aux1,
+        datasets: [
+          {
+            data: aux2,
+            color: (opacity = 1) => `rgba(229, 28, 68, ${opacity})`,
+            strokeWidth: 10
           }
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16
-        }}
-      />
-    </View>
+        ],
+        legend: [`${response[0].code}`]
+      }
+
+      setDataResponse(obj)
+    }
+  }
+
+  function handleTypeProgression(value) {
+    setFilterGraph(value)
+  }
+
+  return (
+    <Background>
+      <Header title="Gráfico" />
+      <View style={styles.container}>
+        {dataResponse?.datasets?.length > 0 && <LineChart
+          data={dataResponse}
+          width={Dimensions.get("window").width}
+          height={220}
+          yAxisLabel="R$"
+          yAxisInterval={1}
+          chartConfig={{
+            backgroundColor: "#000000",
+            backgroundGradientFrom: "#000000",
+            backgroundGradientTo: "#000000",
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16
+            },
+            propsForDots: {
+              r: "7",
+              strokeWidth: "2",
+              stroke: "#E51C44"
+            }
+          }}
+          bezier
+          style={{
+            marginVertical: 8,
+            borderRadius: 16
+          }}
+        />}
+        <View style={styles.containerFilter}>
+          <RectButton style={styles.filter} onPress={() => handleTypeProgression("Year")}>
+            <Text style={styles.titleFilter}>
+              Anual
+            </Text>
+          </RectButton>
+          <RectButton style={styles.filter} onPress={() => handleTypeProgression("Month")}>
+            <Text style={styles.titleFilter}>
+              Mensal
+            </Text>
+          </RectButton>
+          {/* <RectButton style={styles.filter}>
+            <Text style={styles.titleFilter}>
+              Semanal
+            </Text>
+          </RectButton> */}
+        </View>
+      </View>
+    </Background>
   );
 };
 

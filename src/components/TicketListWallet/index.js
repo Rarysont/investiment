@@ -6,6 +6,7 @@ import { maskBRL } from '../../utils/masks';
 import styles from './styles.less';
 
 export function TicketListWallet({
+  id,
   title,
   price,
   quantity,
@@ -19,7 +20,7 @@ export function TicketListWallet({
   const navigation = useNavigation();
 
   function handleEditProfile() {
-    navigation.navigate('Graphic', { coupon: 'oi'});
+    navigation.navigate('Graphic', { idTicket: id });
   }
 
   return(
@@ -45,9 +46,9 @@ export function TicketListWallet({
             </View>
             <View style={styles.containerData}>
               <Text style={styles.nameTicket}>{maskBRL(total)}</Text>
-              <Text style={[styles.nameTicket, {
+              <Text style={[styles.percent, {
                 color: `${String(percent)?.includes('-') ? "#E51C44" : "#32BD50"}`
-              }]}>{String(percent)?.includes('-') ? `${maskBRL(percent)}` : `+${maskBRL(percent)}`}</Text>
+              }]}>{String(percent)?.includes('-') ? `${maskBRL(percent)}%` : `+${maskBRL(percent)}%`}</Text>
             </View>
           </View>
         </View>

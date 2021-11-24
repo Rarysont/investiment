@@ -48,75 +48,84 @@ const MyList = () => {
     }
   }
 
-  return(
-    <Background>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.containerHeader}>
-            <View>
-              <Text style={styles.titleHeader}>Meus Favoritos</Text>
-              <Text style={styles.subtitleHeader}>{`${favorite?.length} ativos`}</Text>
+  if(favorite.length > 0) {
+    return(
+      <Background>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.containerHeader}>
+              <View>
+                <Text style={styles.titleHeader}>Meus Favoritos</Text>
+                <Text style={styles.subtitleHeader}>{`${favorite?.length} ativos`}</Text>
+              </View>
+              <RectButton onPress={handleSearchTicket}>
+                <Entypo name="plus" size={30} color="#32BD50" />
+              </RectButton>
             </View>
-            <RectButton onPress={handleSearchTicket}>
-              <Entypo name="plus" size={30} color="#32BD50" />
+            <View style={styles.containerAllFavorites}>
+              {favorite.length > 0 && favorite.map((ac) => {
+                return (
+                  <View style={styles.favoriteTickets} key={ac.idFavorite}>
+                    <View style={styles.containerImage}>
+                      <Image
+                        source={{ uri: `data:image/png;base64,${ac.stock.companyLogo64}` }}
+                        style={styles.image}
+                        resizeMode="cover"
+                      />
+                    </View>
+                    <View style={styles.containerColumnValues}>
+                      <View style={styles.rowValues}>
+                        <Text style={styles.textAbr}>{ac.stock.code}</Text>
+                        <Text style={styles.textValue}>{parseFloat(ac.stock.priceList[0].price).toFixed(2)}</Text>
+                      </View>
+                      <View style={styles.rowValues}>
+                        <Text style={styles.textName}>{ac.stock.companyName}</Text>
+                        <Text style={[styles.textPercent, {
+                          color: `${String(ac.stock.percentual)?.includes('-') ? "#E51C44" : "#32BD50"}`
+                        }]}>{parseFloat(ac.stock.percentual.toFixed(2))}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.iconsActions}>
+                      <RectButton onPress={() => handleRemoveFavoritTicket(ac)}>
+                        <Ionicons style={styles.iconClear} name="trash" size={25} color="#000" />
+                      </RectButton>
+                    </View>
+                  </View>
+                )
+              })}
+            </View>
+          </View>
+        </ScrollView>
+      </Background>
+    );
+  }
+
+  if(favorite?.length === 0) {
+    return(
+      <Background>
+        <View style={styles.containerWithoutFavorite}>
+          <View style={styles.boxMessage}>
+            <Text style={styles.messageWelcome}>
+              Clique aqui para cadastrar um ativo como favorito
+            </Text>
+          </View>
+          <View style={styles.containerButton}>
+            <RectButton style={styles.buttonRegister} onPress={handleSearchTicket}>
+              <Text style={styles.messageButton}>Cadastrar</Text>
             </RectButton>
           </View>
-          <View style={styles.containerAllFavorites}>
-            {favorite.length > 0 ? favorite.map((ac) => {
-              return (
-                <View style={styles.favoriteTickets} key={ac.idFavorite}>
-                  <View style={styles.containerImage}>
-                    <Image
-                      source={{ uri: `data:image/png;base64,${ac.stock.companyLogo64}` }}
-                      style={styles.image}
-                      resizeMode="cover"
-                    />
-                  </View>
-                  <View style={styles.containerColumnValues}>
-                    <View style={styles.rowValues}>
-                      <Text style={styles.textAbr}>{ac.stock.code}</Text>
-                      <Text style={styles.textValue}>{parseFloat(ac.stock.priceList[0].price.toFixed(2))}</Text>
-                    </View>
-                    <View style={styles.rowValues}>
-                      <Text style={styles.textName}>{ac.stock.companyName}</Text>
-                      <Text style={styles.textPercent}>{parseFloat(ac.stock.percentual.toFixed(2))}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.iconsActions}>
-                    <RectButton onPress={() => handleRemoveFavoritTicket(ac)}>
-                      <Ionicons style={styles.iconClear} name="trash" size={25} color="#000" />
-                    </RectButton>
-                  </View>
-                </View>
-              )
-            }) : (
-              <View style={styles.containerWithoutFavorite}>
-                <View style={styles.boxMessage}>
-                  <Text style={styles.messageWelcome}>
-                    Clique aqui para cadastrar um ativo como favorito
-                  </Text>
-                </View>
-                <View style={styles.containerButton}>
-                  <RectButton style={styles.buttonRegister} onPress={handleSearchTicket}>
-                    <Text style={styles.messageButton}>Cadastrar</Text>
-                  </RectButton>
-                </View>
-              </View>
-            )}
-          </View>
         </View>
-      </ScrollView>
+      </Background>
+    )
+  }
+
+  return (
+    <Background>
+      <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+        <ActivityIndicator size={25} color="green" />
+      </View>
     </Background>
-  );
-
-  // return (
-  //   <Background>
-  //     <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center'}}>
-  //       <ActivityIndicator size={25} color="green" />
-  //     </View>
-  //   </Background>
-  // )
-
+  )
 }
 
 export default MyList;

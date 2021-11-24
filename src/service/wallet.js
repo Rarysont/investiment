@@ -6,7 +6,7 @@ export const addOrRemoveWallet = (data) => {
     amount: Number(data.amount),
     purchase: data.purchase,
     operationDate: data.operationDate,
-    price: Number(data.price),
+    price: parseFloat(data.price),
   }
 
   return api.post("Stock/PostOperation", params, { headers: {
