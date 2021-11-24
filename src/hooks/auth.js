@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
+import { basicLogin } from '../service/login';
 
 import { COLLECTION_USERS } from '../../configs/database';
 
@@ -31,8 +32,8 @@ function AuthProvider({ children }) {
       setLoading(true);
 
       const { type, accessToken, user } = await Google.logInAsync({
-        androidClientId: GOOGLE_ANDROID_CLIENT_ID,
-        iosClientId: GOOGLE_IOS_CLIENT_ID,
+        androidClientId: '150568413679-lu41k6lt5olatro2j062boosuocrhv4g.apps.googleusercontent.com',
+        iosClientId: '150568413679-dain7elk9usf2id377v94gh6diotjo3j.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
       });
 
@@ -61,16 +62,11 @@ function AuthProvider({ children }) {
     }
   }
 
-  async function singOut() {
-    setUserInfo({});
-    await AsyncStorage.removeItem(COLLECTION_USERS);
-  }
-
   async function signInFacebook() {
     try {
       setLoading(true);
       await Facebook.initializeAsync({
-        appId: APP_ID,
+        appId: '496078595025593',
       });
       const {
         type,
@@ -114,6 +110,52 @@ function AuthProvider({ children }) {
     }
   }
 
+  async function login(data) {
+    try {
+      setLoading(true);
+
+      const response = await basicLogin(data);
+
+      if (response.status === 200) {
+        const { value } = response.data;
+
+        const userData = {
+          id: value.id,
+          email: value.email,
+          name: value.fullName,
+          token: value.token,
+          phone: value.phone
+        }
+
+        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
+
+        setUserInfo({
+          id: value.id,
+          email: value.email,
+          name: value.fullName,
+          token: value.token,
+          phone: value.phone
+        });
+      }
+    } catch (error){
+      const err = error.response.data;
+      if (error) {
+        Alert.alert("Erro ao tentar realizar login", err, [
+          {
+            text: "Ok"
+          }
+        ])
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function singOut() {
+    setUserInfo({});
+    await AsyncStorage.removeItem(COLLECTION_USERS);
+  }
+
   async function loadUserStorageData() {
     const storage = await AsyncStorage.getItem(COLLECTION_USERS);
     if (storage) {
@@ -134,6 +176,7 @@ function AuthProvider({ children }) {
       loading,
       token,
       singOut,
+      login,
     }}>
       {children}
     </AuthContext.Provider>

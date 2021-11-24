@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   Image,
@@ -28,7 +28,7 @@ export function Routes(){
 
   return(
     <NavigationContainer>
-      {userInfo.id
+      {userInfo.token
         ? <AuthRoutes />
         : <AppRoutes />}
     </NavigationContainer>

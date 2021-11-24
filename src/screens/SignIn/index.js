@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -11,22 +11,25 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from "react-hook-form";
 import { RectButton } from 'react-native-gesture-handler';
+import { Entypo } from '@expo/vector-icons';
 
 import styles from './styles.less';
 
-import Login from '../../assets/2login.png';
+import Login from '../../assets/logo-bg.png';
 import { useAuth } from '../../hooks/auth';
-
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';
 import { ButtonSocial } from '../../components/ButtonSocial';
 
 export function SignIn() {
   const navigation = useNavigation();
-  const { signInGoogle, signInFacebook } = useAuth();
+  const [eye, setEye] = useState(true);
+  const { signInGoogle, signInFacebook, login } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = data => console.log(data);
+  async function onSubmit(data) {
+    await login(data)
+  }
 
   async function handleSignIn() {
     try {
@@ -70,9 +73,13 @@ export function SignIn() {
           />
 
           <Controller
+            name="Username"
             control={control}
             rules={{
-              required: true,
+              required: {
+                message:  'Campo obrigatório',
+                value: true,
+              }
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
@@ -84,30 +91,44 @@ export function SignIn() {
                 placeholderTextColor="#000"
               />
             )}
-            name="username"
+            name="userName"
           />
-          {errors.username && <Text>This is required.</Text>}
 
-          <Controller
-            control={control}
-            rules={{
-              maxLength: 100,
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="Password"
-                placeholderTextColor="#000"
-                secureTextEntry={true}
-              />
-            )}
-            name="password"
-          />
+          {errors.userName && <Text style={styles.errors}>{errors.userName.message}</Text>}
+
+          <View style={styles.containerEyes}>
+            <Controller
+              name="Password"
+              control={control}
+              rules={{
+                required: {
+                  message:  'Campo obrigatório',
+                  value: true,
+                }
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.inputPassword}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="Password"
+                  placeholderTextColor="#000"
+                  secureTextEntry={eye}
+                />
+              )}
+              name="password"
+            />
+
+            <RectButton onPress={() => setEye(eye ? false : true)}>
+              <Entypo name={eye ? "eye-with-line" : "eye"} size={25} color="#000" />
+            </RectButton>
+          </View>
+
+          {errors.password && <Text style={styles.errors}>{errors.password.message}</Text>}
 
           <CustomButton title="Entrar" onPress={handleSubmit(onSubmit)} />
+
           <View style={styles.signUp}>
             <RectButton
               style={styles.btnSignUp}

@@ -1,64 +1,55 @@
 import React from 'react';
 import { RectButton } from 'react-native-gesture-handler';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import { maskBRL } from '../../utils/masks';
 import styles from './styles.less';
 
 export function TicketListWallet({
+  id,
   title,
   price,
   quantity,
   abr,
   percent,
   image,
+  lastPrice,
+  total,
   ...rest
 }){
-  // const uri = 'https://seeklogo.com/images/B/bradesco-com-degrade-logo-D276931A0A-seeklogo.com.png';
-  // const uri = 'https://logodownload.org/wp-content/uploads/2019/09/magalu-logo-0.png';
-  const uri = 'https://i.pinimg.com/originals/9b/73/bd/9b73bd6461829fa63c4c366ffd2f19cf.png';
-
   const navigation = useNavigation();
 
   function handleEditProfile() {
-    navigation.navigate('Graphic', { coupon: 'oi'});
+    navigation.navigate('Graphic', { idTicket: id });
   }
 
   return(
       <RectButton {...rest} onPress={handleEditProfile}>
         <View style={[styles.container, {
-          borderWidth: 3 ,
-          borderColor: '#ccc'
+          borderBottomWidth: 1,
         }]}>
-          <View style={styles.containerData}>
-            <View style={styles.containerImage}>
+          <View style={styles.containerWallet}>
+            <View style={styles.containerData}>
               <Image
-                source={{ uri: image }}
+                source={{ uri: `data:image/png;base64,${image}` }}
                 style={styles.image}
                 resizeMode="cover"
               />
+              <Text style={styles.abr}>{abr}</Text>
             </View>
-
-            <View style={styles.containerNameAction}>
-              <Text style={styles.nameTicket}>
-                { title }
-              </Text>
-              <Text style={[styles.nameTicket, { color: '#32BD50'}]}>
-                { abr }
-              </Text>
+            <View style={styles.containerData}>
+              <Text style={styles.quantity}>{quantity}</Text>
             </View>
-
-            <View style={styles.bar}></View>
-
-            <View style={styles.containerPrice}>
-              <Text style={styles.price}>
-                { price }
-              </Text>
-              <Text style={[styles.percent, { color: '#32BD50'}]}>
-                { percent }%
-              </Text>
+            <View style={styles.containerData}>
+              <Text style={styles.price}>{maskBRL(price)}</Text>
+              <Text style={styles.lastPrice}>{maskBRL(lastPrice)}</Text>
             </View>
-
+            <View style={styles.containerData}>
+              <Text style={styles.nameTicket}>{maskBRL(total)}</Text>
+              <Text style={[styles.percent, {
+                color: `${String(percent)?.includes('-') ? "#E51C44" : "#32BD50"}`
+              }]}>{String(percent)?.includes('-') ? `${maskBRL(percent)}%` : `+${maskBRL(percent)}%`}</Text>
+            </View>
           </View>
         </View>
       </RectButton>

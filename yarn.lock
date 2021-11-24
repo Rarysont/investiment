@@ -1188,6 +1188,11 @@
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/poppins/-/poppins-0.2.0.tgz#f6df892909142740b53d3227cb5eb24990ece151"
   integrity sha512-NIwmzadXGHmS7F7nznfpObVAAi4PdSvueLKnPN3ERG0yMYrC8svEP2IY25H4xLoIGBazgkN192ZkStM3PMYajA==
 
+"@expo-google-fonts/roboto@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/roboto/-/roboto-0.2.0.tgz#00c5904eaa80d90b5b7b11b86c8d4a72a28e922e"
+  integrity sha512-dZ7e0OOHqbKI80htdxlXooAA6UrhqpJY/6w2JC/RW53nUt1U96PGMbE4F5uLXQt93stp3/fc+cvESKKk64kXKg==
+
 "@expo/apple-utils@0.0.0-alpha.25":
   version "0.0.0-alpha.25"
   resolved "https://registry.yarnpkg.com/@expo/apple-utils/-/apple-utils-0.0.0-alpha.25.tgz#fea4f5a409cc1bf79a0d2acec3eca52dbd8443c1"
@@ -9831,7 +9836,7 @@ moment-timezone@^0.5.31:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0":
+"moment@>= 2.9.0", moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==

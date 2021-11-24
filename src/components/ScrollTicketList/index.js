@@ -1,20 +1,34 @@
 import React from 'react';
 import { TicketListWallet } from "../TicketListWallet"
 import { acoes } from "../../utils/acoes"
+import { Text, View } from 'react-native';
+import { useWallet } from '../../hooks/wallet';
 
 export function ScrollTicketList() {
-  return (
-      acoes.map(ac => (
+  const { allTickets } = useWallet()
+
+  if(allTickets?.listInfoTicket?.length > 0) {
+    return (
+      allTickets?.listInfoTicket?.map(ac => (
         <TicketListWallet
-          key={ac.id}
-          image={ac.image}
-          title={ac.name}
-          abr={ac.abr}
-          img={ac.url}
-          price={ac.value}
-          quantity={ac.qtd}
+          key={ac.idTicket}
+          id={ac.idTicket}
+          image={ac.companyLogo}
+          title={ac.companyName}
+          abr={ac.name}
+          price={ac.averagePrice}
+          lastPrice={ac.lastPrice}
+          quantity={ac.amount}
           percent={ac.percent}
+          total={ac.totalVariation}
         />
       ))
+    )
+  }
+
+  return (
+    <View>
+      <Text>Você não ativos na sua carteira!</Text>
+    </View>
   )
 }

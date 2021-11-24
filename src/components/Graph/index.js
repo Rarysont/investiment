@@ -1,110 +1,128 @@
-import React from "react";
-import { Text, View, StyleSheet, Dimensions } from "react-native";
-import Svg, { Path } from "react-native-svg";
-import Animated, {
-  useAnimatedProps,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { mixPath, useVector } from "react-native-redash";
-
-import { graphs, SIZE } from "../../utils/Model";
+import React, { useEffect, useState } from "react";
+import { Text, View, Dimensions } from "react-native";
+import {
+  LineChart,
+} from "react-native-chart-kit";
+import { RectButton } from 'react-native-gesture-handler';
 import { Header } from "../Header";
-import HeaderGraph from "./HeaderGraph";
-import Cursor from "../CursorGraph";
-
-const { width } = Dimensions.get("window");
-const AnimatedPath = Animated.createAnimatedComponent(Path);
-
-const SELECTION_WIDTH = width - 32;
-const BUTTON_WIDTH = (width - 20) / graphs.length;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  containerSvg: {
-    marginTop: 20,
-  },
-  backgroundSelection: {
-    backgroundColor: "#1CC0A0",
-    ...StyleSheet.absoluteFillObject,
-    width: BUTTON_WIDTH,
-    borderRadius: 8,
-  },
-  selection: {
-    flexDirection: "row",
-    width: SELECTION_WIDTH,
-    alignSelf: "center",
-  },
-  labelContainer: {
-    padding: 10,
-    width: BUTTON_WIDTH,
-  },
-  label: {
-    fontSize: 14,
-    color: "black",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
+import { Background } from "../background";
+import styles from './styles.less';
+import { getDataGraphic } from "../../service/graphic";
+import { useAuth } from "../../hooks/auth";
 
 const Graph = ({ route }) => {
-  const translation = useVector();
-  const { coupon } = route.params;
-  const transition = useSharedValue(0);
-  const previous = useSharedValue(0);
-  const current = useSharedValue(0);
-  const animatedProps = useAnimatedProps(() => {
-    const previousPath = graphs[previous.value].data.path;
-    const currentPath = graphs[current.value].data.path;
-    return {
-      d: mixPath(transition.value, previousPath, currentPath),
-    };
-  });
-  const style = useAnimatedStyle(() => ({
-    transform: [{ translateX: withTiming(BUTTON_WIDTH * current.value) }],
-  }));
+  const { idTicket } = route?.params;
+  const { userInfo } = useAuth();
+  const [dataResponse, setDataResponse] = useState([]);
+  const [filterGraph, setFilterGraph] = useState("Year")
+
+  const [response, setResponse] = useState([]);
+
+  useEffect(() => {
+    getValuesGraphic()
+  }, [idTicket, filterGraph])
+
+  useEffect(() => {
+    renderDataWithColor()
+  }, [response])
+
+  async function getValuesGraphic() {
+    try {
+      const params = {
+        stockId: idTicket,
+        typeProgression: filterGraph,
+      }
+      const data = await getDataGraphic(params, userInfo.token);
+      if(data?.value) setResponse(data?.value)
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  function renderDataWithColor() {
+    const aux1 = [];
+    const aux2 = [];
+    if(response?.length > 0) {
+      response?.forEach((item, index) => {
+        if(index === 0 || index === response?.length - 1 || index === ((response.length / 2) - 1)) {
+          aux1.push(item.description);
+        } else {
+          aux1.push("")
+        }
+        aux2.push(parseFloat(item.price).toFixed(2));
+      })
+
+      const obj = {
+        labels: aux1,
+        datasets: [
+          {
+            data: aux2,
+            color: (opacity = 1) => `rgba(229, 28, 68, ${opacity})`,
+            strokeWidth: 10
+          }
+        ],
+        legend: [`${response[0].code}`]
+      }
+
+      setDataResponse(obj)
+    }
+  }
+
+  function handleTypeProgression(value) {
+    setFilterGraph(value)
+  }
+
   return (
-    <View style={styles.container}>
+    <Background>
       <Header title="Gráfico" />
-      <HeaderGraph translation={translation} index={current} />
-      <View style={styles.containerSvg}>
-        <Svg width={SIZE} height={SIZE}>
-          <AnimatedPath
-            animatedProps={animatedProps}
-            fill="transparent"
-            stroke="black"
-            strokeWidth={3}
-          />
-        </Svg>
-        <Cursor translation={translation} index={current} />
-      </View>
-      <View style={styles.selection}>
-        <View style={StyleSheet.absoluteFill}>
-          <Animated.View style={[styles.backgroundSelection, style]} />
+      <View style={styles.container}>
+        {dataResponse?.datasets?.length > 0 && <LineChart
+          data={dataResponse}
+          width={Dimensions.get("window").width}
+          height={220}
+          yAxisLabel="R$"
+          yAxisInterval={1}
+          chartConfig={{
+            backgroundColor: "#000000",
+            backgroundGradientFrom: "#000000",
+            backgroundGradientTo: "#000000",
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16
+            },
+            propsForDots: {
+              r: "7",
+              strokeWidth: "2",
+              stroke: "#E51C44"
+            }
+          }}
+          bezier
+          style={{
+            marginVertical: 8,
+            borderRadius: 16
+          }}
+        />}
+        <View style={styles.containerFilter}>
+          <RectButton style={styles.filter} onPress={() => handleTypeProgression("Year")}>
+            <Text style={styles.titleFilter}>
+              Anual
+            </Text>
+          </RectButton>
+          <RectButton style={styles.filter} onPress={() => handleTypeProgression("Month")}>
+            <Text style={styles.titleFilter}>
+              Mensal
+            </Text>
+          </RectButton>
+          {/* <RectButton style={styles.filter}>
+            <Text style={styles.titleFilter}>
+              Semanal
+            </Text>
+          </RectButton> */}
         </View>
-        {graphs.map((graph, index) => {
-          return (
-            <TouchableWithoutFeedback
-              key={graph.label}
-              onPress={() => {
-                previous.value = current.value;
-                transition.value = 0;
-                current.value = index;
-                transition.value = withTiming(1);
-              }}
-            >
-              <Animated.View style={[styles.labelContainer]}>
-                <Text style={styles.label}>{graph.label}</Text>
-              </Animated.View>
-            </TouchableWithoutFeedback>
-          );
-        })}
       </View>
-    </View>
+    </Background>
   );
 };
 

@@ -7,6 +7,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import styles from './styles';
+import defaultImage from '../../assets/defaultUser.png'
 
 export function Profile(){
   const { userInfo, singOut } = useAuth();
@@ -26,7 +27,7 @@ export function Profile(){
 
         <View style={styles.container}>
           <Image
-            source={{ uri: userInfo.picture }}
+            source={defaultImage}
             style={[styles.imageUser, {
               borderWidth: 3,
               borderRadius: 180,

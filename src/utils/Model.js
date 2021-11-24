@@ -8,11 +8,11 @@ import data from "./data.json";
 
 export const SIZE = Dimensions.get("window").width;
 
-const values = data.data.prices;
+const values = data?.data?.prices;
 const POINTS = 60;
 
 const buildGraph = (datapoints, label) => {
-  const priceList = datapoints.prices.slice(0, POINTS);
+  const priceList = datapoints?.prices?.slice(0, POINTS);
   const formattedValues = priceList.map(
     (price) => [parseFloat(price[0]), parseFloat(price[1])]
   );
@@ -28,7 +28,7 @@ const buildGraph = (datapoints, label) => {
     label,
     minPrice,
     maxPrice,
-    percentChange: datapoints.percent_change,
+    percentChange: datapoints?.percent_change,
     path: parse(
       shape
         .line()
@@ -41,29 +41,19 @@ const buildGraph = (datapoints, label) => {
 
 export const graphs = [
   {
-    label: "1 HORA",
-    value: 0,
-    data: buildGraph(values.hour, "Última hora"),
-  },
-  {
     label: "1 DIA",
     value: 1,
-    data: buildGraph(values.day, "Hoje"),
+    data: buildGraph(values?.day, "Hoje"),
   },
   {
     label: "1 MÊS",
     value: 2,
-    data: buildGraph(values.month, "Último mês"),
+    data: buildGraph(values?.month, "Último mês"),
   },
   {
     label: "1 ANO",
     value: 3,
-    data: buildGraph(values.year, "Último ano"),
-  },
-  {
-    label: "TUDO",
-    value: 4,
-    data: buildGraph(values.all, "Histórico completo"),
+    data: buildGraph(values?.year, "Último ano"),
   },
 ];
 
