@@ -37,7 +37,8 @@ function FavoriteProvider({ children }) {
       const res = await favoriteStocks(params, { token: userInfo.token })
 
       if(res.toLowerCase() === 'success') {
-        setRemove(params?.idFavorite)
+        const random = (Math.random() + 1).toString(36).substring(7);
+        setRemove(random)
       }
     } catch(error) {
       console.log(error.response, "error")

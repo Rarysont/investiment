@@ -18,7 +18,8 @@ function WalletProvider({ children }) {
   async function addWalletOrRemoveWallet(value) {
     const response = await addOrRemoveWallet(value);
     if(response.toLowerCase() === 'success') {
-      setAddWallet(value.idTicket)
+      const random = (Math.random() + 1).toString(36).substring(7);
+      setAddWallet(random)
     }
 
     return response
