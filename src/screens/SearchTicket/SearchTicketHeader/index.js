@@ -28,9 +28,9 @@ export function SearchTicketHeader({ route }){
 
   async function onSubmit(data) {
     try {
-      console.log(data.date, "DATE")
-      console.log(moment(new Date(data.date)).format("YYYY-MM-DD"), "DATE2")
-      const date = moment(new Date(data.date)).format("YYYY-DD-MM");
+      const s = data.date.split("/");
+      const dateFormated = `${s[1]}/${s[0]}/${s[2]}`;
+      const date = moment(new Date(dateFormated)).format("YYYY-MM-DD");
       const params = {
         idTicket: id,
         amount: data.qtd,

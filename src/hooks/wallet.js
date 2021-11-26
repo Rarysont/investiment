@@ -26,15 +26,18 @@ function WalletProvider({ children }) {
   }
 
   async function getTickets() {
-    const response = await getAllTickets({ token: userInfo.token });
+    try {
+      const response = await getAllTickets({ token: userInfo.token });
+      if(response?.value?.listInfoTicket.length > 0) {
+        setAllTickets(response?.value)
+      } else {
+        setAllTickets([])
+      }
 
-    if(response?.value?.listInfoTicket.length > 0) {
-      setAllTickets(response?.value)
-    } else {
-      setAllTickets([])
+      return response
+    } catch(error) {
+        console.error(error.response, "wallet")
     }
-
-    return response
   }
 
   return (

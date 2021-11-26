@@ -19,49 +19,48 @@ import Login from '../../assets/logo-bg.png';
 import { useAuth } from '../../hooks/auth';
 import { CustomButton } from '../../components/Button';
 import { Background } from '../../components/background';
-import { ButtonSocial } from '../../components/ButtonSocial';
 
 export function SignIn() {
   const navigation = useNavigation();
   const [eye, setEye] = useState(true);
-  const { signInGoogle, signInFacebook, login } = useAuth();
+  const { login } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   async function onSubmit(data) {
     await login(data)
   }
 
-  async function handleSignIn() {
-    try {
-      await signInGoogle();
-    } catch (error) {
-      if (error) {
-        Alert.alert("Erro ao tentar login com Google", "Tente novamente", [
-          {
-            text: "Ok"
-          }
-        ])
-      }
-    }
-  }
+  // async function handleSignIn() {
+  //   try {
+  //     await signInGoogle();
+  //   } catch (error) {
+  //     if (error) {
+  //       Alert.alert("Erro ao tentar login com Google", "Tente novamente", [
+  //         {
+  //           text: "Ok"
+  //         }
+  //       ])
+  //     }
+  //   }
+  // }
 
   function handleSignUp() {
     navigation.navigate('SignUp');
   }
 
-  async function handleSignInFacebook() {
-    try {
-      await signInFacebook();
-    } catch (error) {
-      if (error) {
-        Alert.alert("Erro ao tentar login com Faccebook", "Tente novamente", [
-          {
-            text: "Ok"
-          }
-        ])
-      }
-    }
-  }
+  // async function handleSignInFacebook() {
+  //   try {
+  //     await signInFacebook();
+  //   } catch (error) {
+  //     if (error) {
+  //       Alert.alert("Erro ao tentar login com Faccebook", "Tente novamente", [
+  //         {
+  //           text: "Ok"
+  //         }
+  //       ])
+  //     }
+  //   }
+  // }
 
   return (
     <Background>
@@ -138,10 +137,10 @@ export function SignIn() {
                 Ainda não tem conta? Cadastre-se
               </Text>
             </RectButton>
-            <Text style={styles.textEntry}>Ou</Text>
+            {/* <Text style={styles.textEntry}>Ou</Text> */}
           </View>
 
-          <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8 }]}>
+          {/* <View style={[styles.auth, { borderWidth: 3, borderColor: '#000', borderRadius: 8 }]}>
             <ButtonSocial
               title="Entrar com Google"
               isLogin={true}
@@ -156,7 +155,7 @@ export function SignIn() {
               isLogin={true}
               isFacebook={true}
             />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </Background>

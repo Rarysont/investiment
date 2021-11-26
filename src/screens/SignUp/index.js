@@ -43,7 +43,8 @@ export function SignUp() {
         navigation.navigate('SignIn')
       }
     } catch(error) {
-      const err = JSON.parse(error.response.data)
+      console.log(error);
+      const err = JSON.parse(error.response)
       if (error) {
         Alert.alert("Erro ao tentar cadastrar conta", err.Errors[0], [
           {
@@ -219,10 +220,10 @@ export function SignUp() {
                 Já tem uma conta? Faça login
               </Text>
             </RectButton>
-            <Text style={styles.textEntry}>Ou cadastre-se com</Text>
+            {/* <Text style={styles.textEntry}>Ou cadastre-se com</Text> */}
           </View>
 
-          <View style={[styles.auth, {
+          {/* <View style={[styles.auth, {
             borderWidth: 3,
             borderColor: '#000',
             borderRadius: 8
@@ -243,7 +244,7 @@ export function SignUp() {
               onPress={handleSignInFacebook}
               isFacebook={true}
             />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </Background>
